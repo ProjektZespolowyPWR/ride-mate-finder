@@ -14,3 +14,7 @@ clean:
 swagger:
 	cd ride-mate-finder-app && \
 	mvn clean install -DskipDocumentation=false -DskipTests
+sql:
+	cd ride-mate-finder-app && \
+	mvn clean install -DskipTests -DgenerateEntriesFromDB=true
+
