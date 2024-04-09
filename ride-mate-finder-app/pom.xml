@@ -17,7 +17,9 @@
     <properties>
         <java.version>17</java.version>
         <skipDocumentation>true</skipDocumentation>
+        <generateEntriesFromDB>false</generateEntriesFromDB>
     </properties>
+
     <dependencies>
 
         <dependency>
@@ -29,6 +31,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
 
         <dependency>
@@ -70,5 +82,47 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>generate-code</id>
+            <activation>
+                <property>
+                    <name>generateEntriesFromDB</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.hibernate.tool</groupId>
+                        <artifactId>hibernate-tools-maven</artifactId>
+                        <version>${hibernate.version}</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.postgresql</groupId>
+                                <artifactId>postgresql</artifactId>
+                                <version>${postgresql.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <id>entity-generation</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>hbm2java</goal>
+                                </goals>
+                                <configuration>
+                                    <ejb3>true</ejb3>
+                                    <outputDirectory>src/main/java</outputDirectory>
+                                    <packageName>com.ridematefinder.sql</packageName>
+                                    <propertyFile>src/main/resources/hibernate/hibernate.properties</propertyFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
