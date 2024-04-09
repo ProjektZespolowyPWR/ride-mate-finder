@@ -3,7 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ride-mate-finder</groupId>
     <artifactId>ride-mate-finder-app</artifactId>
 
     <parent>
@@ -17,6 +16,7 @@
     <description>Spring Boot Project for ride mate finder</description>
     <properties>
         <java.version>17</java.version>
+        <skipDocumentation>true</skipDocumentation>
     </properties>
     <dependencies>
 
@@ -30,6 +30,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -39,6 +45,27 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>com.ridematefinder.RideMateFinderAppApplication</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                <version>${springdoc.version}</version>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skipDocumentation}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <apiDocsUrl>http://localhost:7777/api-docs.yaml</apiDocsUrl>
+                    <outputFileName>openapi.yaml</outputFileName>
+                    <outputDir>../api</outputDir>
                 </configuration>
             </plugin>
         </plugins>
