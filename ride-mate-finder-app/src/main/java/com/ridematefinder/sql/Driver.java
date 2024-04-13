@@ -1,5 +1,9 @@
 package com.ridematefinder.sql;
+<<<<<<< HEAD
 // Generated 13 kwi 2024, 15:14:44 by Hibernate Tools 6.4.4.Final
+=======
+// Generated 9 kwi 2024, 11:51:05 by Hibernate Tools 6.4.4.Final
+>>>>>>> main
 
 
 import jakarta.persistence.Column;
