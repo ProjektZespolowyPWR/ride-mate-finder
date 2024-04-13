@@ -16,7 +16,10 @@ swagger:
 	mvn clean install -DskipDocumentation=false -DskipTests
 sql:
 	cd ride-mate-finder-app && \
-	mvn clean install -DskipTests -DgenerateEntriesFromDB=true
+	mvn clean install -DskipTests -DgenerateEntriesFromDB=true && \
+	rm src/main/java/com/ridematefinder/sql/FlywaySchemaHistory.java && \
+	cd .. && \
+	bash delete_date.sh
 migrate:
 	cd ride-mate-finder-app && \
-    mvn spring-boot:run -Dconsole=true
+    mvn spring-boot:run -Dconsole=true -Dspring-boot.run.profiles=console-application
