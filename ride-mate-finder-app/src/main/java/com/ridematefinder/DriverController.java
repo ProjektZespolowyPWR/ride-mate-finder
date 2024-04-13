@@ -18,47 +18,47 @@ public class DriverController {
     private DriverRepository driverRepository;
 
     @GetMapping
-    public ResponseEntity<List<Driver>> getAllCompanies() {
-        List<Driver> companies = driverRepository.findAll();
-        return new ResponseEntity<>(companies, HttpStatus.OK);
+    public ResponseEntity<List<Driver>> getAllDrivers() {
+        List<Driver> drivers = driverRepository.findAll();
+        return new ResponseEntity<>(drivers, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Driver> getDriverById(@PathVariable("id") UUID id) {
-        Driver Driver = driverRepository.findById(id).orElseThrow(() ->
+        Driver driver = driverRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Driver not found with id: " + id));
-        return new ResponseEntity<>(Driver, HttpStatus.OK);
+        return new ResponseEntity<>(driver, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?> addDriver(@RequestBody Driver Driver) {
-        if (Driver.getId() != null) {
+    public ResponseEntity<?> addDriver(@RequestBody Driver driver) {
+        if (driver.getId() != null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "id should not be provided"
             );
         }
-        Driver.setId(UUID.randomUUID());
-        Driver savedDriver = driverRepository.save(Driver);
+        driver.setId(UUID.randomUUID());
+        Driver savedDriver = driverRepository.save(driver);
         return new ResponseEntity<>(savedDriver, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDriver(@PathVariable("id") UUID id) {
-        return driverRepository.findById(id).map(Driver -> {
+        return driverRepository.findById(id).map(driver -> {
             driverRepository.deleteById(id);
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }).orElseThrow(() -> new EntityNotFoundException("Driver not found with id: " + id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateDriver(@PathVariable("id") UUID id, @RequestBody Driver updatedDriver) {
-        Driver Driver = driverRepository.findById(id)
-                .map(existingDriver -> {
-                    existingDriver.setName(updatedDriver.getName());
-                    existingDriver.setDescription(updatedDriver.getDescription());
-                    return driverRepository.save(existingDriver);
+    public ResponseEntity<?> updateCompany(@PathVariable("id") UUID id, @RequestBody Driver updatedDriver) {
+        Driver driver = driverRepository.findById(id)
+                .map(existingCompany -> {
+                    existingCompany.setName(updatedDriver.getName());
+                    existingCompany.setDescription(updatedDriver.getDescription());
+                    return driverRepository.save(existingCompany);
                 }).orElseThrow(() -> new EntityNotFoundException("Driver not found with id: " + id));
 
-        return new ResponseEntity<>(Driver, HttpStatus.OK);
+        return new ResponseEntity<>(driver, HttpStatus.OK);
     }
 }

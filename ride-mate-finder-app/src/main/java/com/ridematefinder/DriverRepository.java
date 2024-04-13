@@ -1,7 +1,7 @@
 package com.ridematefinder;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.ridematefinder.sql.Driver;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
