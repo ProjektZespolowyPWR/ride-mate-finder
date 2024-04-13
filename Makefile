@@ -17,7 +17,6 @@ swagger:
 sql:
 	cd ride-mate-finder-app && \
 	mvn clean install -DskipTests -DgenerateEntriesFromDB=true && \
-	rm src/main/java/com/ridematefinder/sql/FlywaySchemaHistory.java && \
 	cd .. && \
 	bash delete_date.sh
 migrate:

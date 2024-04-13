@@ -126,6 +126,7 @@
                                     <outputDirectory>src/main/java</outputDirectory>
                                     <packageName>com.ridematefinder.sql</packageName>
                                     <propertyFile>src/main/resources/hibernate/hibernate.properties</propertyFile>
+                                    <revengFile>src/main/resources/hibernate.reveng.xml</revengFile>
                                 </configuration>
                             </execution>
                         </executions>
