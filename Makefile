@@ -17,4 +17,6 @@ swagger:
 sql:
 	cd ride-mate-finder-app && \
 	mvn clean install -DskipTests -DgenerateEntriesFromDB=true
-
+migrate:
+	cd ride-mate-finder-app && \
+    mvn spring-boot:run -Dconsole=true

@@ -6,3 +6,15 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     operationSorter: method
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ridematefinder
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  flyway:
+    locations: classpath:db/migration
+    schemas: public
