@@ -1,47 +1,46 @@
 package com.ridematefinder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.ridematefinder.sql.Driver;
 import java.util.List;
 
 @RestController
 @RequestMapping("/drivers")
 public class DriverController {
-    private List<Driver> drivers = new ArrayList<>(Arrays.asList(new Driver(1, "Jan", "example driver 1"), new Driver(2, "Andrew", "example driver 2")));
+    @Autowired
+    private DriverRepository driverRepository;
+
     @GetMapping
-    public List<Driver> getAllDrivers() {
-        return drivers;
+    public List<Driver> getAllCompanies() {
+        return driverRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Driver getDriverById(@PathVariable("id") int id) {
-        for(Driver driver : drivers){
-            if(driver.id == id){
-                return driver;
-            }
-        }
-        return null;
+    public Driver getCompanyById(@PathVariable("id") int id) {
+        return driverRepository.findById(id).orElse(null);
     }
 
     @PostMapping("")
-    public void addDriver(@RequestBody Driver driver) {
-        drivers.add(driver);
+    public Driver addCompany(@RequestBody Driver company) {
+        return driverRepository.save(company);
     }
 
     @PutMapping("/{id}")
-    public void updateDriver(@PathVariable("id") int id, @RequestBody Driver updatedDriver) {
-        Driver driver = getDriverById(id);
-        if (driver != null) {
-            driver.name = updatedDriver.name;
-            driver.description = updatedDriver.description;
-        }
+    public Driver updateCompany(@PathVariable("id") int id, @RequestBody Driver updatedCompany) {
+        return driverRepository.findById(id)
+                .map(company -> {
+                    company.setName(updatedCompany.getName());
+                    company.setDescription(updatedCompany.getDescription());
+                    return driverRepository.save(company);
+                }).orElseGet(() -> {
+                    updatedCompany.setId(id);
+                    return driverRepository.save(updatedCompany);
+                });
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDriver(@PathVariable("id") int id) {
-        Driver driverToDelete = getDriverById(id);
-        drivers.remove(driverToDelete);
+    public void deleteCompany(@PathVariable("id") int id) {
+        driverRepository.deleteById(id);
     }
 }

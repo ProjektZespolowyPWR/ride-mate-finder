@@ -1,14 +1,6 @@
-server:
-  port: 7777
-springdoc:
-  api-docs:
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    operationSorter: method
 spring:
   datasource:
-    url: jdbc:postgresql://postgresqldb:5432/ridematefinder
+    url: jdbc:postgresql://localhost:5432/ridematefinder
     username: user
     password: password
     driver-class-name: org.postgresql.Driver
@@ -16,5 +8,6 @@ spring:
       connectionTimeout: 20000
       maximumPoolSize: 5
   flyway:
+    enabled: false
     locations: classpath:db/migration
     schemas: public
