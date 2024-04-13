@@ -17,6 +17,7 @@ public class DriverController {
     @Autowired
     private DriverRepository driverRepository;
 
+
     @GetMapping
     public ResponseEntity<List<Driver>> getAllDrivers() {
         List<Driver> drivers = driverRepository.findAll();
