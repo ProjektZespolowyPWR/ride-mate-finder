@@ -1,4 +1,4 @@
-package com.ridematefinder;
+package com.ridematefinder.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;

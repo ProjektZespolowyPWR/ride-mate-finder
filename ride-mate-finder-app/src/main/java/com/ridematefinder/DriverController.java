@@ -52,12 +52,12 @@ public class DriverController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCompany(@PathVariable("id") UUID id, @RequestBody Driver updatedDriver) {
+    public ResponseEntity<?> updateDriver(@PathVariable("id") UUID id, @RequestBody Driver updatedDriver) {
         Driver driver = driverRepository.findById(id)
-                .map(existingCompany -> {
-                    existingCompany.setName(updatedDriver.getName());
-                    existingCompany.setDescription(updatedDriver.getDescription());
-                    return driverRepository.save(existingCompany);
+                .map(existingDriver -> {
+                    existingDriver.setName(updatedDriver.getName());
+                    existingDriver.setDescription(updatedDriver.getDescription());
+                    return driverRepository.save(existingDriver);
                 }).orElseThrow(() -> new EntityNotFoundException("Driver not found with id: " + id));
 
         return new ResponseEntity<>(driver, HttpStatus.OK);
