@@ -23,9 +23,9 @@ public class Pictures  implements java.io.Serializable {
 
      private UUID id;
      private String picturePath;
-     private Set badgeses = new HashSet(0);
-     private Set users = new HashSet(0);
-     private Set cars = new HashSet(0);
+     private Set<Badges> badgeses = new HashSet<Badges>(0);
+     private Set<User> users = new HashSet<User>(0);
+     private Set<Car> cars = new HashSet<Car>(0);
 
     public Pictures() {
     }
@@ -35,7 +35,7 @@ public class Pictures  implements java.io.Serializable {
         this.id = id;
         this.picturePath = picturePath;
     }
-    public Pictures(UUID id, String picturePath, Set badgeses, Set users, Set cars) {
+    public Pictures(UUID id, String picturePath, Set<Badges> badgeses, Set<User> users, Set<Car> cars) {
        this.id = id;
        this.picturePath = picturePath;
        this.badgeses = badgeses;
@@ -66,29 +66,29 @@ public class Pictures  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="pictures")
-    public Set getBadgeses() {
+    public Set<Badges> getBadgeses() {
         return this.badgeses;
     }
     
-    public void setBadgeses(Set badgeses) {
+    public void setBadgeses(Set<Badges> badgeses) {
         this.badgeses = badgeses;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="pictures")
-    public Set getUsers() {
+    public Set<User> getUsers() {
         return this.users;
     }
     
-    public void setUsers(Set users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="pictures")
-    public Set getCars() {
+    public Set<Car> getCars() {
         return this.cars;
     }
     
-    public void setCars(Set cars) {
+    public void setCars(Set<Car> cars) {
         this.cars = cars;
     }
 

@@ -30,8 +30,8 @@ public class Car  implements java.io.Serializable {
      private String model;
      private Integer year;
      private Integer numOfSeats;
-     private Set opinioncars = new HashSet(0);
-     private Set routes = new HashSet(0);
+     private Set<Opinioncar> opinioncars = new HashSet<Opinioncar>(0);
+     private Set<Route> routes = new HashSet<Route>(0);
 
     public Car() {
     }
@@ -40,7 +40,7 @@ public class Car  implements java.io.Serializable {
     public Car(UUID id) {
         this.id = id;
     }
-    public Car(UUID id, Pictures pictures, User user, String vin, String model, Integer year, Integer numOfSeats, Set opinioncars, Set routes) {
+    public Car(UUID id, Pictures pictures, User user, String vin, String model, Integer year, Integer numOfSeats, Set<Opinioncar> opinioncars, Set<Route> routes) {
        this.id = id;
        this.pictures = pictures;
        this.user = user;
@@ -125,20 +125,20 @@ public class Car  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="car")
-    public Set getOpinioncars() {
+    public Set<Opinioncar> getOpinioncars() {
         return this.opinioncars;
     }
     
-    public void setOpinioncars(Set opinioncars) {
+    public void setOpinioncars(Set<Opinioncar> opinioncars) {
         this.opinioncars = opinioncars;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="car")
-    public Set getRoutes() {
+    public Set<Route> getRoutes() {
         return this.routes;
     }
     
-    public void setRoutes(Set routes) {
+    public void setRoutes(Set<Route> routes) {
         this.routes = routes;
     }
 

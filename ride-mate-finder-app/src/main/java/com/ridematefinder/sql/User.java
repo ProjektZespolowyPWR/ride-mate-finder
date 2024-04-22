@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.HashSet;
@@ -34,14 +33,14 @@ public class User  implements java.io.Serializable {
      private String email;
      private Boolean gender;
      private int age;
-     private Set passengerses = new HashSet(0);
-     private Paymentdata paymentdata;
-     private Set opinionusersForUserIdReceiver = new HashSet(0);
-     private Set opinionusersForUserIdSetter = new HashSet(0);
-     private Set cars = new HashSet(0);
-     private Set opinioncars = new HashSet(0);
-     private Set routes = new HashSet(0);
-     private Set userbadgeses = new HashSet(0);
+     private Set<Passengers> passengerses = new HashSet<Passengers>(0);
+     private Set<Paymentdata> paymentdatas = new HashSet<Paymentdata>(0);
+     private Set<Opinionuser> opinionusersForUserIdReceiver = new HashSet<Opinionuser>(0);
+     private Set<Opinionuser> opinionusersForUserIdSetter = new HashSet<Opinionuser>(0);
+     private Set<Car> cars = new HashSet<Car>(0);
+     private Set<Opinioncar> opinioncars = new HashSet<Opinioncar>(0);
+     private Set<Route> routes = new HashSet<Route>(0);
+     private Set<Userbadges> userbadgeses = new HashSet<Userbadges>(0);
 
     public User() {
     }
@@ -53,7 +52,7 @@ public class User  implements java.io.Serializable {
         this.email = email;
         this.age = age;
     }
-    public User(UUID id, Pictures pictures, UUID driverId, String name, String surname, String email, Boolean gender, int age, Set passengerses, Paymentdata paymentdata, Set opinionusersForUserIdReceiver, Set opinionusersForUserIdSetter, Set cars, Set opinioncars, Set routes, Set userbadgeses) {
+    public User(UUID id, Pictures pictures, UUID driverId, String name, String surname, String email, Boolean gender, int age, Set<Passengers> passengerses, Set<Paymentdata> paymentdatas, Set<Opinionuser> opinionusersForUserIdReceiver, Set<Opinionuser> opinionusersForUserIdSetter, Set<Car> cars, Set<Opinioncar> opinioncars, Set<Route> routes, Set<Userbadges> userbadgeses) {
        this.id = id;
        this.pictures = pictures;
        this.driverId = driverId;
@@ -63,7 +62,7 @@ public class User  implements java.io.Serializable {
        this.gender = gender;
        this.age = age;
        this.passengerses = passengerses;
-       this.paymentdata = paymentdata;
+       this.paymentdatas = paymentdatas;
        this.opinionusersForUserIdReceiver = opinionusersForUserIdReceiver;
        this.opinionusersForUserIdSetter = opinionusersForUserIdSetter;
        this.cars = cars;
@@ -155,74 +154,74 @@ public class User  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
-    public Set getPassengerses() {
+    public Set<Passengers> getPassengerses() {
         return this.passengerses;
     }
     
-    public void setPassengerses(Set passengerses) {
+    public void setPassengerses(Set<Passengers> passengerses) {
         this.passengerses = passengerses;
     }
 
-@OneToOne(fetch=FetchType.LAZY, mappedBy="user")
-    public Paymentdata getPaymentdata() {
-        return this.paymentdata;
+@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+    public Set<Paymentdata> getPaymentdatas() {
+        return this.paymentdatas;
     }
     
-    public void setPaymentdata(Paymentdata paymentdata) {
-        this.paymentdata = paymentdata;
+    public void setPaymentdatas(Set<Paymentdata> paymentdatas) {
+        this.paymentdatas = paymentdatas;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="userByUserIdReceiver")
-    public Set getOpinionusersForUserIdReceiver() {
+    public Set<Opinionuser> getOpinionusersForUserIdReceiver() {
         return this.opinionusersForUserIdReceiver;
     }
     
-    public void setOpinionusersForUserIdReceiver(Set opinionusersForUserIdReceiver) {
+    public void setOpinionusersForUserIdReceiver(Set<Opinionuser> opinionusersForUserIdReceiver) {
         this.opinionusersForUserIdReceiver = opinionusersForUserIdReceiver;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="userByUserIdSetter")
-    public Set getOpinionusersForUserIdSetter() {
+    public Set<Opinionuser> getOpinionusersForUserIdSetter() {
         return this.opinionusersForUserIdSetter;
     }
     
-    public void setOpinionusersForUserIdSetter(Set opinionusersForUserIdSetter) {
+    public void setOpinionusersForUserIdSetter(Set<Opinionuser> opinionusersForUserIdSetter) {
         this.opinionusersForUserIdSetter = opinionusersForUserIdSetter;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
-    public Set getCars() {
+    public Set<Car> getCars() {
         return this.cars;
     }
     
-    public void setCars(Set cars) {
+    public void setCars(Set<Car> cars) {
         this.cars = cars;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
-    public Set getOpinioncars() {
+    public Set<Opinioncar> getOpinioncars() {
         return this.opinioncars;
     }
     
-    public void setOpinioncars(Set opinioncars) {
+    public void setOpinioncars(Set<Opinioncar> opinioncars) {
         this.opinioncars = opinioncars;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
-    public Set getRoutes() {
+    public Set<Route> getRoutes() {
         return this.routes;
     }
     
-    public void setRoutes(Set routes) {
+    public void setRoutes(Set<Route> routes) {
         this.routes = routes;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
-    public Set getUserbadgeses() {
+    public Set<Userbadges> getUserbadgeses() {
         return this.userbadgeses;
     }
     
-    public void setUserbadgeses(Set userbadgeses) {
+    public void setUserbadgeses(Set<Userbadges> userbadgeses) {
         this.userbadgeses = userbadgeses;
     }
 

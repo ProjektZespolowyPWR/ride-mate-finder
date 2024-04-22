@@ -128,6 +128,7 @@
                                 </goals>
                                 <configuration>
                                     <ejb3>true</ejb3>
+                                    <jdk5>true</jdk5>
                                     <outputDirectory>src/main/java</outputDirectory>
                                     <packageName>com.ridematefinder.sql</packageName>
                                     <propertyFile>src/main/resources/hibernate/hibernate.properties</propertyFile>

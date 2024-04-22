@@ -26,7 +26,7 @@ public class Badges  implements java.io.Serializable {
      private UUID id;
      private Pictures pictures;
      private String badgeDescription;
-     private Set userbadgeses = new HashSet(0);
+     private Set<Userbadges> userbadgeses = new HashSet<Userbadges>(0);
 
     public Badges() {
     }
@@ -35,7 +35,7 @@ public class Badges  implements java.io.Serializable {
     public Badges(UUID id) {
         this.id = id;
     }
-    public Badges(UUID id, Pictures pictures, String badgeDescription, Set userbadgeses) {
+    public Badges(UUID id, Pictures pictures, String badgeDescription, Set<Userbadges> userbadgeses) {
        this.id = id;
        this.pictures = pictures;
        this.badgeDescription = badgeDescription;
@@ -75,11 +75,11 @@ public class Badges  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="badges")
-    public Set getUserbadgeses() {
+    public Set<Userbadges> getUserbadgeses() {
         return this.userbadgeses;
     }
     
-    public void setUserbadgeses(Set userbadgeses) {
+    public void setUserbadgeses(Set<Userbadges> userbadgeses) {
         this.userbadgeses = userbadgeses;
     }
 

@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS "user" (
 );
 
 CREATE TABLE IF NOT EXISTS PaymentData (
-    user_id UUID PRIMARY KEY REFERENCES "user"(driver_id),
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES "user"(driver_id),
     bank_account VARCHAR(255) NOT NULL
 );
 

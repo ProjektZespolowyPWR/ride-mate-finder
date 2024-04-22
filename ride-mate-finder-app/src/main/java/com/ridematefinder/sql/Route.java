@@ -34,7 +34,7 @@ public class Route  implements java.io.Serializable {
      private Date dateOfRide;
      private String urlToMaps;
      private Integer availableSeats;
-     private Set passengerses = new HashSet(0);
+     private Set<Passengers> passengerses = new HashSet<Passengers>(0);
 
     public Route() {
     }
@@ -43,7 +43,7 @@ public class Route  implements java.io.Serializable {
     public Route(UUID id) {
         this.id = id;
     }
-    public Route(UUID id, Car car, User user, String startPoint, String endPoint, Date dateOfRide, String urlToMaps, Integer availableSeats, Set passengerses) {
+    public Route(UUID id, Car car, User user, String startPoint, String endPoint, Date dateOfRide, String urlToMaps, Integer availableSeats, Set<Passengers> passengerses) {
        this.id = id;
        this.car = car;
        this.user = user;
@@ -138,11 +138,11 @@ public class Route  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="route")
-    public Set getPassengerses() {
+    public Set<Passengers> getPassengerses() {
         return this.passengerses;
     }
     
-    public void setPassengerses(Set passengerses) {
+    public void setPassengerses(Set<Passengers> passengerses) {
         this.passengerses = passengerses;
     }
 
