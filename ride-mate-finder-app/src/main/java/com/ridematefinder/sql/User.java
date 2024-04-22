@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Entity
 @Table(name="user"
     ,schema="public"
+    , uniqueConstraints = @UniqueConstraint(columnNames="driver_id") 
 )
 public class User  implements java.io.Serializable {
 
@@ -33,13 +35,13 @@ public class User  implements java.io.Serializable {
      private Boolean gender;
      private int age;
      private Set passengerses = new HashSet(0);
-     private Set userbadgeses = new HashSet(0);
+     private Paymentdata paymentdata;
      private Set opinionusersForUserIdReceiver = new HashSet(0);
      private Set opinionusersForUserIdSetter = new HashSet(0);
-     private Paymentdata paymentdata;
      private Set cars = new HashSet(0);
      private Set opinioncars = new HashSet(0);
      private Set routes = new HashSet(0);
+     private Set userbadgeses = new HashSet(0);
 
     public User() {
     }
@@ -51,7 +53,7 @@ public class User  implements java.io.Serializable {
         this.email = email;
         this.age = age;
     }
-    public User(UUID id, Pictures pictures, UUID driverId, String name, String surname, String email, Boolean gender, int age, Set passengerses, Set userbadgeses, Set opinionusersForUserIdReceiver, Set opinionusersForUserIdSetter, Paymentdata paymentdata, Set cars, Set opinioncars, Set routes) {
+    public User(UUID id, Pictures pictures, UUID driverId, String name, String surname, String email, Boolean gender, int age, Set passengerses, Paymentdata paymentdata, Set opinionusersForUserIdReceiver, Set opinionusersForUserIdSetter, Set cars, Set opinioncars, Set routes, Set userbadgeses) {
        this.id = id;
        this.pictures = pictures;
        this.driverId = driverId;
@@ -61,13 +63,13 @@ public class User  implements java.io.Serializable {
        this.gender = gender;
        this.age = age;
        this.passengerses = passengerses;
-       this.userbadgeses = userbadgeses;
+       this.paymentdata = paymentdata;
        this.opinionusersForUserIdReceiver = opinionusersForUserIdReceiver;
        this.opinionusersForUserIdSetter = opinionusersForUserIdSetter;
-       this.paymentdata = paymentdata;
        this.cars = cars;
        this.opinioncars = opinioncars;
        this.routes = routes;
+       this.userbadgeses = userbadgeses;
     }
    
      @Id 
@@ -93,7 +95,7 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="driver_id")
+    @Column(name="driver_id", unique=true)
     public UUID getDriverId() {
         return this.driverId;
     }
@@ -161,13 +163,13 @@ public class User  implements java.io.Serializable {
         this.passengerses = passengerses;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
-    public Set getUserbadgeses() {
-        return this.userbadgeses;
+@OneToOne(fetch=FetchType.LAZY, mappedBy="user")
+    public Paymentdata getPaymentdata() {
+        return this.paymentdata;
     }
     
-    public void setUserbadgeses(Set userbadgeses) {
-        this.userbadgeses = userbadgeses;
+    public void setPaymentdata(Paymentdata paymentdata) {
+        this.paymentdata = paymentdata;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="userByUserIdReceiver")
@@ -186,15 +188,6 @@ public class User  implements java.io.Serializable {
     
     public void setOpinionusersForUserIdSetter(Set opinionusersForUserIdSetter) {
         this.opinionusersForUserIdSetter = opinionusersForUserIdSetter;
-    }
-
-@OneToOne(fetch=FetchType.LAZY, mappedBy="user")
-    public Paymentdata getPaymentdata() {
-        return this.paymentdata;
-    }
-    
-    public void setPaymentdata(Paymentdata paymentdata) {
-        this.paymentdata = paymentdata;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
@@ -222,6 +215,15 @@ public class User  implements java.io.Serializable {
     
     public void setRoutes(Set routes) {
         this.routes = routes;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+    public Set getUserbadgeses() {
+        return this.userbadgeses;
+    }
+    
+    public void setUserbadgeses(Set userbadgeses) {
+        this.userbadgeses = userbadgeses;
     }
 
 

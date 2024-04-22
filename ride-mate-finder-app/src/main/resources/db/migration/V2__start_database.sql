@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS Pictures (
 
 CREATE TABLE IF NOT EXISTS "user" (
     id UUID PRIMARY KEY,
-    driver_id UUID,
+    driver_id UUID UNIQUE,
     pic_id UUID REFERENCES Pictures(id),
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255),
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "user" (
 );
 
 CREATE TABLE IF NOT EXISTS PaymentData (
-    driver_id UUID PRIMARY KEY REFERENCES "user"(id),
+    user_id UUID PRIMARY KEY REFERENCES "user"(driver_id),
     bank_account VARCHAR(255) NOT NULL
 );
 
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS OpinionUser (
 
 CREATE TABLE IF NOT EXISTS Car (
     id UUID PRIMARY KEY,
-    driver_id UUID REFERENCES "user"(id),
+    user_id UUID REFERENCES "user"(driver_id),
     car_picture_id UUID REFERENCES Pictures(id),
     vin VARCHAR(255),
     model VARCHAR(255),
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS OpinionCar (
 
 CREATE TABLE IF NOT EXISTS Route (
     id UUID PRIMARY KEY,
-    driver_id UUID REFERENCES "user"(id),
+    user_id UUID REFERENCES "user"(driver_id),
     car_id UUID REFERENCES Car(id),
     start_point VARCHAR(255) ,
     end_point VARCHAR(255),
@@ -72,6 +72,6 @@ CREATE TABLE IF NOT EXISTS Badges (
 
 CREATE TABLE IF NOT EXISTS UserBadges (
     id UUID PRIMARY KEY,
-    client_id UUID REFERENCES "user"(id),
+    user_id UUID REFERENCES "user"(id),
     badge_id UUID REFERENCES Badges(id)
 );

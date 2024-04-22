@@ -75,7 +75,7 @@ public class Car  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="driver_id")
+    @JoinColumn(name="user_id")
     public User getUser() {
         return this.user;
     }

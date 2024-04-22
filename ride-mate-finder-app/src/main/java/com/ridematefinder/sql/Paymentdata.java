@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Paymentdata  implements java.io.Serializable {
 
 
-     private UUID driverId;
+     private UUID userId;
      private User user;
      private String bankAccount;
 
@@ -37,13 +37,13 @@ public class Paymentdata  implements java.io.Serializable {
      @GenericGenerator(name="com.ridematefinder.sql.PaymentdataIdGenerator", strategy="foreign")@Id @GeneratedValue(generator="com.ridematefinder.sql.PaymentdataIdGenerator")
 
     
-    @Column(name="driver_id", unique=true, nullable=false)
-    public UUID getDriverId() {
-        return this.driverId;
+    @Column(name="user_id", unique=true, nullable=false)
+    public UUID getUserId() {
+        return this.userId;
     }
     
-    public void setDriverId(UUID driverId) {
-        this.driverId = driverId;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
 @OneToOne(fetch=FetchType.LAZY)@PrimaryKeyJoinColumn

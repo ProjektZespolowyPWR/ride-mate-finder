@@ -60,7 +60,7 @@ public class Userbadges  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="client_id")
+    @JoinColumn(name="user_id")
     public User getUser() {
         return this.user;
     }
