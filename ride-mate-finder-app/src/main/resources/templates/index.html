@@ -10,6 +10,21 @@
     <div class="container">
         <h1 class="text-center my-4">Ride Mate Finder</h1>
     </div>
+<!--    <h1>OAuth2 Login with Spring Security</h1>-->
+<!--    <div>-->
+<!--        You are successfully logged in<span style="font-weight:bold" th:text="${userName}"></span>-->
+<!--    </div>-->
+
+    <h1>Endpoints</h1>
+    <h2>Private</h2>
+    <ul>
+        <li><a th:href="@{/private/messages}">Private</a> endpoint where Google auth is required</li>
+    </ul>
+    <h2>Public</h2>
+    <ul>
+        <li><a th:href="@{/public/messages}">Public</a> endpoint where not Google auth is required</li>
+    </ul>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

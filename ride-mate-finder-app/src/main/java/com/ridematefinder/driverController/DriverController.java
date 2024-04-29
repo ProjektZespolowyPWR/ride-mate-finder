@@ -2,6 +2,8 @@ package com.ridematefinder.driverController;
 
 
 import com.ridematefinder.service.DriverService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ public class DriverController {
     public DriverController(DriverService driverService) {
         this.driverService = driverService;
     }
+
 
     @GetMapping
     public ResponseEntity<List<Driver>> getAllDrivers() {
