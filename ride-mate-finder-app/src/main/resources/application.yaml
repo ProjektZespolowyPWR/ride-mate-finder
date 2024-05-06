@@ -23,5 +23,3 @@ spring:
       resourceserver:
         opaque-token:
           introspection-uri: https://www.googleapis.com
-          clientId: "clientId"
-          clientSecret: "clientSecret"
