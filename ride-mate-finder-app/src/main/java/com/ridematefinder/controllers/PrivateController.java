@@ -15,13 +15,12 @@ import org.slf4j.Logger;
 @RestController
 public class PrivateController {
 
-    Logger logger = LoggerFactory.getLogger(PrivateController.class);
+//    Logger logger = LoggerFactory.getLogger(PrivateController.class);
 
     @GetMapping("/private/messages")
     public ResponseEntity<MessageDto> privateMessages(
             @AuthenticationPrincipal(expression = "name") String name){
-        logger.info("test: "+name);
-        return ResponseEntity.ok(new MessageDto(name));
+        return ResponseEntity.ok(new MessageDto("private content "+ name));
     }
 
 }

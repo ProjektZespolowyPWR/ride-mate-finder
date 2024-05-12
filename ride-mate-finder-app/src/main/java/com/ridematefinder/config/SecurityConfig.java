@@ -1,7 +1,5 @@
 package com.ridematefinder.config;
 
-import com.ridematefinder.service.UserService;
-import com.ridematefinder.sql.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,14 +17,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    public SecurityConfig(WebClient userInfoClient, UserService userService) {
-
+    public SecurityConfig(WebClient userInfoClient) {
         this.userInfoClient = userInfoClient;
-        this.userService = userService;
     }
     private final WebClient userInfoClient;
-
-    private final UserService userService;
 
 
 
@@ -45,7 +39,7 @@ public class SecurityConfig {
 
     @Bean
     public OpaqueTokenIntrospector introspector() {
-        return new GoogleOpaqueTokenIntrospector(userInfoClient, userService);
+        return new GoogleOpaqueTokenIntrospector(userInfoClient);
     }
 
 }
