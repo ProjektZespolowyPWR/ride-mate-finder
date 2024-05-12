@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS "user" (
     pic_id UUID REFERENCES Pictures(id),
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255),
-    email VARCHAR(255) NOT NULL UNIQUE,
-    gender VARCHAR(255),
+    email VARCHAR(255) NOT NULL,
+    gender BIT,
     age INTEGER NOT NULL
 );
 
