@@ -20,7 +20,7 @@ import java.util.UUID;
 @Entity
 @Table(name="user"
     ,schema="public"
-    , uniqueConstraints = @UniqueConstraint(columnNames="driver_id") 
+    , uniqueConstraints = {@UniqueConstraint(columnNames="driver_id"), @UniqueConstraint(columnNames="email")} 
 )
 public class User  implements java.io.Serializable {
 
@@ -31,7 +31,7 @@ public class User  implements java.io.Serializable {
      private String name;
      private String surname;
      private String email;
-     private Boolean gender;
+     private String gender;
      private int age;
      private Set<Passengers> passengerses = new HashSet<Passengers>(0);
      private Set<Paymentdata> paymentdatas = new HashSet<Paymentdata>(0);
@@ -52,7 +52,7 @@ public class User  implements java.io.Serializable {
         this.email = email;
         this.age = age;
     }
-    public User(UUID id, Pictures pictures, UUID driverId, String name, String surname, String email, Boolean gender, int age, Set<Passengers> passengerses, Set<Paymentdata> paymentdatas, Set<Opinionuser> opinionusersForUserIdReceiver, Set<Opinionuser> opinionusersForUserIdSetter, Set<Car> cars, Set<Opinioncar> opinioncars, Set<Route> routes, Set<Userbadges> userbadgeses) {
+    public User(UUID id, Pictures pictures, UUID driverId, String name, String surname, String email, String gender, int age, Set<Passengers> passengerses, Set<Paymentdata> paymentdatas, Set<Opinionuser> opinionusersForUserIdReceiver, Set<Opinionuser> opinionusersForUserIdSetter, Set<Car> cars, Set<Opinioncar> opinioncars, Set<Route> routes, Set<Userbadges> userbadgeses) {
        this.id = id;
        this.pictures = pictures;
        this.driverId = driverId;
@@ -124,7 +124,7 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="email", nullable=false, length=255)
+    @Column(name="email", unique=true, nullable=false, length=255)
     public String getEmail() {
         return this.email;
     }
@@ -134,12 +134,12 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="gender")
-    public Boolean getGender() {
+    @Column(name="gender", length=255)
+    public String getGender() {
         return this.gender;
     }
     
-    public void setGender(Boolean gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
