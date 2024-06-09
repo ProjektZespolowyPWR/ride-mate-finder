@@ -23,9 +23,10 @@ public class UserService {
         Optional<User> existingUser = userRepository.findUserByEmail(user.getEmail());
         if (existingUser.isPresent()) {
             throw new IllegalStateException("User with email " + user.getEmail() + "already exists");
+        } else {
+            user.setId(UUID.randomUUID());
+            return userRepository.save(user);
         }
-        user.setId(UUID.randomUUID());
-        return userRepository.save(user);
     }
 
     public List<User> getAllUsers() {
