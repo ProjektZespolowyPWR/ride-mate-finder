@@ -1,16 +1,15 @@
 package com.ridematefinder.controllers;
 
-import com.ridematefinder.dtos.MessageDto;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class PublicController {
 
     @GetMapping("/public/messages")
-    public ResponseEntity<MessageDto> publicMessages() {
-        return ResponseEntity.ok(new MessageDto("public content"));
-
+    public String publicMessages(Model model) {
+        model.addAttribute("body", "nobody");
+        return "response";
     }
 }

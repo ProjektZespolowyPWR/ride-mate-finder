@@ -20,6 +20,8 @@ spring:
     schemas: public
   security:
     oauth2:
-      resourceserver:
-        opaque-token:
-          introspection-uri: https://www.googleapis.com
+      client:
+        registration:
+          google:
+            clientId: "test"
+            clientSecret: "test"
