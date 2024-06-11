@@ -7,6 +7,8 @@ springdoc:
     path: /swagger-ui.html
     operationSorter: method
 spring:
+  resources:
+    static-locations: classpath:/static/
   datasource:
     url: jdbc:postgresql://postgresqldb:5432/ridematefinder
     username: user
