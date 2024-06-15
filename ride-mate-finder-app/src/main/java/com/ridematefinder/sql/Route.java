@@ -1,6 +1,7 @@
 package com.ridematefinder.sql;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -69,6 +70,7 @@ public class Route  implements java.io.Serializable {
 
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="car_id")
+@JsonBackReference
     public Car getCar() {
         return this.car;
     }
@@ -77,8 +79,9 @@ public class Route  implements java.io.Serializable {
         this.car = car;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_id")
+@ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="user_id", referencedColumnName = "driver_id")
+@JsonBackReference
     public User getUser() {
         return this.user;
     }
