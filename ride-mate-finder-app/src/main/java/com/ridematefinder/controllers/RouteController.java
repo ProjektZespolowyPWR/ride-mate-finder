@@ -28,7 +28,7 @@ public class RouteController {
         return routeRepository.findAll();
     }
 
-    @GetMapping("/view")
+    @GetMapping("/all")
     public String viewAllRoutes(Model model) {
         model.addAttribute("routes", routeRepository.findAll());
         return "routes";

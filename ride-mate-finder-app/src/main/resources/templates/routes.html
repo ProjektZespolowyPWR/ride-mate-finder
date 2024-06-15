@@ -9,8 +9,6 @@
 </head>
 <body>
 <header th:replace="~{header :: header}"></header>
-<h1>Routes</h1>
-
 <div class="container mt-4">
     <div class="row">
         <div th:each="route : ${routes}" class="col-md-4">
@@ -20,6 +18,10 @@
                     <p class="card-text">
                         Date: <span th:text="${#dates.format(route.dateOfRide, 'dd MMMM yyyy')}">Date</span><br>
                         Available Seats: <span th:text="${route.availableSeats}">0</span><br>
+                        Driver Name: <span th:text="${route.user.name}">Name</span><br>
+                        Surname: <span th:text="${route.user.surname}">Surname</span><br>
+                        Age: <span th:text="${route.user.age}">Age</span><br>
+                        Gender: <span th:text="${route.user.gender}">Gender</span><br>
                         <a th:href="${route.urlToMaps}" target="_blank">View on Map</a>
                     </p>
                 </div>

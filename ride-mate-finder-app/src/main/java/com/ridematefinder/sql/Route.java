@@ -79,8 +79,8 @@ public class Route  implements java.io.Serializable {
         this.car = car;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_id")
+@ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="user_id", referencedColumnName = "driver_id")
 @JsonBackReference
     public User getUser() {
         return this.user;
