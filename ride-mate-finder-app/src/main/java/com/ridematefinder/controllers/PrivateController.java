@@ -1,5 +1,8 @@
 package com.ridematefinder.controllers;
 
+import com.ridematefinder.repository.UserRepository;
+import com.ridematefinder.sql.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
@@ -10,21 +13,36 @@ import java.util.Optional;
 
 @Controller
 public class PrivateController {
-    private final UserController userController;
+    private final UserRepository userRepository;
 
-    public PrivateController(UserController userController) {
-        this.userController = userController;
+    public PrivateController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/messages")
-    public String privateMessages(@AuthenticationPrincipal OAuth2User user, Model model) {
+    public String privateMessages(@AuthenticationPrincipal OAuth2User user, Model model, HttpSession session) {
         model.addAttribute("body", user.getAttribute("name"));
         try {
             String email = user.getAttribute("email").toString();
-            System.out.println(email);
+            Optional<User> userOptional = userRepository.getUserByEmail(email);
+            if (userOptional.isEmpty()) {
+                User newUser = new User();
+                newUser.setAge(0);
+                newUser.setName(user.getAttribute("name").toString());
+                newUser.setEmail(email);
+                newUser.setId(java.util.UUID.randomUUID());
+                userRepository.save(newUser);
+                System.out.println("user id: "+newUser.getId());
+                session.setAttribute("userId", newUser.getId());
+            }
+            else {
+                session.setAttribute("userId", userOptional.get().getId());
+                System.out.println("user id: "+userOptional.get().getId());
+            }
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("session id: " +session.getAttribute("userId"));
         return "response";
 
     }
