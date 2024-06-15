@@ -1,14 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Profile Form</title>
+  <title>User Profile</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 <header th:replace="~{header :: header}"></header>
 
-<h1 th:text="${LoginUser.name}"></h1>
+<div class="container mt-5">
+  <div class="card p-4">
+    <div class="text-center mb-4">
+      <h1 class="mb-4" th:text="${LoginUser.name}">User Name</h1>
+      <div class="mb-4">
+        <img th:if="${userImage}" th:src="'data:image/png;base64,' + ${userImage}" alt="User image" class="img-fluid rounded-circle user-image" />
+      </div>
+      <p th:if="${userImage == null}" class="text-muted">No user image available</p>
+    </div>
+    <h2 class="text-center mb-4">User Profile</h2>
+    <div class="mb-4">
+      <p><strong>Email:</strong> <span th:text="${LoginUser.email}"></span></p>
+      <p><strong>Gender:</strong> <span th:text="${LoginUser.gender}"></span></p>
+      <p><strong>Age:</strong> <span th:text="${LoginUser.age}"></span></p>
+    </div>
+    <div class="mb-4">
+      <h3 class="mb-3">User's Cars</h3>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>Model</th>
+          <th>VIN</th>
+          <th>Year</th>
+          <th>Number of Seats</th>
+          <th>Picture</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car : ${cars}">
+          <td th:text="${car.model}">Model</td>
+          <td th:text="${car.vin}">VIN</td>
+          <td th:text="${car.year}">Year</td>
+          <td th:text="${car.numOfSeats}">Number of Seats</td>
+          <td th:if="${carImages[car.id]}">
+            <img th:src="'data:image/png;base64,' + ${carImages[car.id]}" alt="Car image" class="img-fluid car-image"/>
+          </td>
+          <td th:unless="${carImages[car.id]}">
+            No Image
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center">
+      <a href="/carForm" class="btn btn-primary">Add Car</a>
+    </div>
+  </div>
+</div>
 
 <footer th:replace="~{footer :: footer}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
