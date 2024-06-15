@@ -1,6 +1,7 @@
 package com.ridematefinder.sql;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -52,7 +53,7 @@ public class Pictures  implements java.io.Serializable {
         this.id = id;
     }
 
-    
+
     @Column(name="data", nullable=false, length=511)
     public byte[] getPictureData() {
         return this.data;
@@ -72,6 +73,7 @@ public class Pictures  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="pictures")
+@JsonManagedReference
     public Set<User> getUsers() {
         return this.users;
     }
@@ -81,6 +83,7 @@ public class Pictures  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="pictures")
+@JsonManagedReference
     public Set<Car> getCars() {
         return this.cars;
     }
