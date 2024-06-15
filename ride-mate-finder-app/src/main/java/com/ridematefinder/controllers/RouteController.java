@@ -4,13 +4,15 @@ import com.ridematefinder.sql.Route;
 import com.ridematefinder.repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/routes")
 public class RouteController {
 
@@ -24,6 +26,12 @@ public class RouteController {
     @GetMapping
     public List<Route> getAllRoutes() {
         return routeRepository.findAll();
+    }
+
+    @GetMapping("/view")
+    public String viewAllRoutes(Model model) {
+        model.addAttribute("routes", routeRepository.findAll());
+        return "routes";
     }
 
     @GetMapping("/{id}")
