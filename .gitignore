@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 aplication.yaml
+ride-mate-finder-app/src/main/resources/application.yaml
