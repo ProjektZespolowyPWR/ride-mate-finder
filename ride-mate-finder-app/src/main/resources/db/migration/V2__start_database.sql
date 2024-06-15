@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS Passengers (
     route_id UUID REFERENCES Route(id),
     passenger_id UUID REFERENCES "user"(id),
     passenger_spot VARCHAR(255),
-    accepted BIT
+    accepted INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS Badges (

@@ -1,10 +1,17 @@
 package com.ridematefinder.controllers;
 
+import com.ridematefinder.repository.PassengersRepository;
 import com.ridematefinder.repository.RouteRepository;
+import com.ridematefinder.repository.UserRepository;
+import com.ridematefinder.sql.Passengers;
 import com.ridematefinder.sql.Route;
+import com.ridematefinder.sql.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
@@ -15,9 +22,13 @@ import java.util.UUID;
 public class CityController {
 
     private final RouteRepository routeRepository;
+    private final UserRepository userRepository;
+    private final PassengersRepository passengersRepository;
 
-    public CityController(RouteRepository routeRepository) {
+    public CityController(RouteRepository routeRepository, UserRepository userRepository, PassengersRepository passengersRepository) {
         this.routeRepository = routeRepository;
+        this.userRepository = userRepository;
+        this.passengersRepository = passengersRepository;
     }
 
     @GetMapping("/routes/submit_city")
@@ -26,4 +37,24 @@ public class CityController {
         route.ifPresent(r -> model.addAttribute("route", r));
         return "stop_form";
     }
+
+    @PostMapping("/routes/submit_city")
+    public String addPassenger(@ModelAttribute Passengers passengerForm, @RequestParam UUID routeId, @RequestParam("cityName") String city, @RequestParam("address") String spot, HttpSession session) {
+        UUID userId = (UUID) session.getAttribute("userId");
+        Optional<User> user = userRepository.findById(userId);
+        System.out.println(user.get().getName());
+        Optional<Route> route = routeRepository.findById(routeId);
+        System.out.println(route.get().getId());
+        System.out.println(city);
+        System.out.println(spot);
+
+        if (user.isPresent() && route.isPresent()) {
+            System.out.println(passengerForm.getPassengerSpot());
+            Passengers newPassenger = new Passengers(UUID.randomUUID(), user.get(), route.get(), passengerForm.getPassengerSpot(), 0);
+            passengersRepository.save(newPassenger);
+            return "redirect:/routes/all";  // Redirect after post success
+        }
+        return "redirect:/errorPage";  // Redirect in case of error
+    }
+
 }
