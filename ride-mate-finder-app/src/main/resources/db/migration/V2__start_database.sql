@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS Pictures (
     id UUID PRIMARY KEY,
-    picture_path VARCHAR(511) NOT NULL
+    data BYTEA NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "user" (

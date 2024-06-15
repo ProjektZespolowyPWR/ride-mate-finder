@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile Form</title>
+</head>
+<body>
+<h1>Add User Profile</h1>
+<form th:action="@{/addUserData}" method="post" th:object="${user}" enctype="multipart/form-data">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" required>
+    </div>
+    <div>
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname" th:field="*{surname}">
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:field="*{email}" required>
+    </div>
+    <div>
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" name="gender" th:field="*{gender}">
+    </div>
+    <div>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" th:field="*{age}" required>
+    </div>
+    <div>
+        <label for="file">Profile Picture:</label>
+        <input type="file" id="file" name="file" accept="image/*" required>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+</body>
+</html>

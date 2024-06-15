@@ -1,12 +1,8 @@
 package com.ridematefinder.sql;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -22,7 +18,8 @@ public class Pictures  implements java.io.Serializable {
 
 
      private UUID id;
-     private String picturePath;
+     @Lob
+     private byte[] data;
      private Set<Badges> badgeses = new HashSet<Badges>(0);
      private Set<User> users = new HashSet<User>(0);
      private Set<Car> cars = new HashSet<Car>(0);
@@ -31,13 +28,13 @@ public class Pictures  implements java.io.Serializable {
     }
 
 	
-    public Pictures(UUID id, String picturePath) {
+    public Pictures(UUID id, byte[] data) {
         this.id = id;
-        this.picturePath = picturePath;
+        this.data = data;
     }
-    public Pictures(UUID id, String picturePath, Set<Badges> badgeses, Set<User> users, Set<Car> cars) {
+    public Pictures(UUID id, byte[] data, Set<Badges> badgeses, Set<User> users, Set<Car> cars) {
        this.id = id;
-       this.picturePath = picturePath;
+       this.data = data;
        this.badgeses = badgeses;
        this.users = users;
        this.cars = cars;
@@ -57,12 +54,12 @@ public class Pictures  implements java.io.Serializable {
 
     
     @Column(name="picture_path", nullable=false, length=511)
-    public String getPicturePath() {
-        return this.picturePath;
+    public byte[] getPictureData() {
+        return this.data;
     }
     
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setPictureData(byte[] data) {
+        this.data = data;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="pictures")
