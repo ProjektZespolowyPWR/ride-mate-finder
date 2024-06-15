@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,8 +35,19 @@ public class UserController {
     public String showProfileForm(Model model, HttpSession session ) {
         UUID userId = (UUID) session.getAttribute("userId");
         Optional<User> user = userRepository.findById(userId);
-        user.ifPresent(value -> model.addAttribute("LoginUser", value));
-        model.addAttribute("user", new User());
+        user.ifPresent(value -> { model.addAttribute("LoginUser", value);
+
+            if (value.getPictures() != null) {
+                System.out.println("test get picture");
+                byte[] pictureData = value.getPictures().getPictureData();;
+                String base64Image = Base64.getEncoder().encodeToString(pictureData);
+                model.addAttribute("userImage", base64Image);
+            }
+        });
+        model.addAttribute("user", user.orElse(new User()));
+        System.out.println("show profile controller");
+        System.out.println("user age"+user.get().getAge());
+
         return "profileForm";
     }
 
@@ -43,28 +55,62 @@ public class UserController {
     public String showProfile(Model model, HttpSession session){
         UUID userId = (UUID) session.getAttribute("userId");
         Optional<User> user = userRepository.findById(userId);
-        user.ifPresent(value -> model.addAttribute("LoginUser", value));
+        user.ifPresent(value -> { model.addAttribute("LoginUser", value);
+
+            if (value.getPictures() != null) {
+                System.out.println("test get picture");
+                byte[] pictureData = value.getPictures().getPictureData();;
+                String base64Image = Base64.getEncoder().encodeToString(pictureData);
+                model.addAttribute("userImage", base64Image);
+            }
+         });
         return "profile";
     }
 
-    @PostMapping("/addUserData")
-    public String addUserData(@Valid User user, BindingResult result, @RequestParam("file") MultipartFile file, Model model) {
+    @PostMapping("/updateUserData")
+    public String addUserData(@Valid User user, BindingResult result, @RequestParam("file") MultipartFile file, Model model, HttpSession session) {
         System.out.println("test");
         if (result.hasErrors()) {
             return "profileForm";
         }
-        try {
-            System.out.println("test");
-            // Save the picture data in the database
-            Pictures picture = new Pictures();
-            picture.setPictureData(file.getBytes());
-            pictureRepository.save(picture);
+        UUID userId = (UUID) session.getAttribute("userId");
+        Optional<User> existingUserOptional = userRepository.findById(userId);
 
-            // Set the picture reference to the user
-            UUID dirverId = UUID.randomUUID();
-            user.setPictures(picture);
-            user.setId(dirverId);
-            userRepository.save(user);
+        if (existingUserOptional.isEmpty()) {
+            model.addAttribute("errorMessage", "User not found.");
+            return "profileForm";
+        }
+        System.out.println("test 1");
+
+        try {
+            User existingUser = existingUserOptional.get();
+            System.out.println("test 2");
+            if (!file.isEmpty()) {
+                System.out.println("test add picture pre");
+                // Save the picture data in the database
+                Pictures picture = new Pictures();
+
+                picture.setPictureData(file.getBytes());
+                System.out.println("test post set picture");
+
+                picture.setId(UUID.randomUUID());
+                pictureRepository.save(picture);
+
+                System.out.println("post save picture");
+
+                existingUser.setPictures(picture);
+
+                System.out.println("test add picture post");
+            }
+
+            // Update other user fields
+            existingUser.setName(user.getName());
+            existingUser.setSurname(user.getSurname());
+            existingUser.setGender(user.getGender());
+            existingUser.setAge(user.getAge());
+            System.out.println("test 3");
+
+            userRepository.save(existingUser);
 
             return "index";
         } catch (IOException e) {

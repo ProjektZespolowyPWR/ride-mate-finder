@@ -9,7 +9,7 @@
 <body>
 <header class="header header__loggedIn">
     <div class="container">
-        <a class="header__logo" href="#">
+        <a class="header__logo" th:href="@{/}">
             <img th:src="@{/images/ridematelogo.svg}">
             <h1>Ride Mate Finder</h1>
         </a>
@@ -32,7 +32,8 @@
                     <div class="dropdown-content">
                         <a th:href="@{/messages}">Login</a>
                         <a th:href="@{/logout}">Logout</a>
-                        <a th:href="@{/showUserProfile}">Profile</a>
+                        <a th:if="${session.userId != null}" th:href="@{/showUserProfile}">Profile</a>
+                        <a th:if="${session.userId != null}" th:href="@{/profileForm}">Update profile</a>
                     </div>
                 </div>
             </a>

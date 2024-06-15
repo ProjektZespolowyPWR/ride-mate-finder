@@ -53,7 +53,7 @@ public class Pictures  implements java.io.Serializable {
     }
 
     
-    @Column(name="picture_path", nullable=false, length=511)
+    @Column(name="data", nullable=false, length=511)
     public byte[] getPictureData() {
         return this.data;
     }

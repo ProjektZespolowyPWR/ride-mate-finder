@@ -27,10 +27,12 @@ public class PrivateController {
             Optional<User> userOptional = userRepository.getUserByEmail(email);
             if (userOptional.isEmpty()) {
                 User newUser = new User();
-                newUser.setAge(0);
+                newUser.setAge(3);
                 newUser.setName(user.getAttribute("name").toString());
                 newUser.setEmail(email);
                 newUser.setId(java.util.UUID.randomUUID());
+                newUser.setGender("Not Specified");
+                newUser.setSurname("Not Specified");
                 userRepository.save(newUser);
                 System.out.println("user id: "+newUser.getId());
                 session.setAttribute("userId", newUser.getId());
@@ -38,6 +40,8 @@ public class PrivateController {
             else {
                 session.setAttribute("userId", userOptional.get().getId());
                 System.out.println("user id: "+userOptional.get().getId());
+                System.out.println("user age: "+userOptional.get().getAge());
+                System.out.println("User name: "+userOptional.get().getName());
             }
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
