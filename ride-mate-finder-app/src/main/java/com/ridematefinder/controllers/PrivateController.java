@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
 
+import static java.util.UUID.randomUUID;
+
 @Controller
 public class PrivateController {
     private final UserRepository userRepository;
@@ -30,7 +32,8 @@ public class PrivateController {
                 newUser.setAge(3);
                 newUser.setName(user.getAttribute("name").toString());
                 newUser.setEmail(email);
-                newUser.setId(java.util.UUID.randomUUID());
+                newUser.setId(randomUUID());
+                newUser.setDriverId(randomUUID());
                 newUser.setGender("Not Specified");
                 newUser.setSurname("Not Specified");
                 userRepository.save(newUser);
@@ -38,6 +41,7 @@ public class PrivateController {
                 session.setAttribute("userId", newUser.getId());
             }
             else {
+                System.out.println("nie istnieje");
                 session.setAttribute("userId", userOptional.get().getId());
                 System.out.println("user id: "+userOptional.get().getId());
                 System.out.println("user age: "+userOptional.get().getAge());
