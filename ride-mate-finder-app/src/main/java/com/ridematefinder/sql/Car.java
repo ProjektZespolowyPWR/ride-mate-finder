@@ -3,14 +3,11 @@ package com.ridematefinder.sql;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -34,6 +31,7 @@ public class Car  implements java.io.Serializable {
      private Integer numOfSeats;
      private Set<Opinioncar> opinioncars = new HashSet<Opinioncar>(0);
      private Set<Route> routes = new HashSet<Route>(0);
+
 
     public Car() {
     }
@@ -78,7 +76,7 @@ public class Car  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_id", referencedColumnName = "driver_id")
 @JsonBackReference
     public User getUser() {
         return this.user;
@@ -118,7 +116,7 @@ public class Car  implements java.io.Serializable {
         this.year = year;
     }
 
-    
+
     @Column(name="num_of_seats")
     public Integer getNumOfSeats() {
         return this.numOfSeats;

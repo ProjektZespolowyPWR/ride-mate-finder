@@ -1,7 +1,9 @@
 package com.ridematefinder.controllers;
 
+import com.ridematefinder.repository.CarRepository;
 import com.ridematefinder.repository.PictureRepository;
 import com.ridematefinder.repository.UserRepository;
+import com.ridematefinder.sql.Car;
 import com.ridematefinder.sql.Pictures;
 import com.ridematefinder.sql.User;
 import jakarta.servlet.http.HttpSession;
@@ -16,19 +18,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class UserController {
 
     private final UserRepository userRepository;
     private final PictureRepository pictureRepository;
+    private final CarRepository carRepository;
 
-    public UserController(UserRepository userRepository, PictureRepository pictureRepository) {
+    public UserController(UserRepository userRepository, PictureRepository pictureRepository, CarRepository carRepository) {
         this.userRepository = userRepository;
         this.pictureRepository = pictureRepository;
+        this.carRepository = carRepository;
     }
 
     @GetMapping("/profileForm")
@@ -56,7 +58,6 @@ public class UserController {
         UUID userId = (UUID) session.getAttribute("userId");
         Optional<User> user = userRepository.findById(userId);
         user.ifPresent(value -> { model.addAttribute("LoginUser", value);
-
             if (value.getPictures() != null) {
                 System.out.println("test get picture");
                 byte[] pictureData = value.getPictures().getPictureData();;
@@ -64,6 +65,17 @@ public class UserController {
                 model.addAttribute("userImage", base64Image);
             }
          });
+        List<Car> cars = carRepository.findAllByUser(user.get());
+        Map<UUID, String> carImages = new HashMap<>();
+        cars.forEach(car -> {
+            if (car.getPictures() != null) {
+                byte[] pictureData = car.getPictures().getPictureData();
+                String base64Image = Base64.getEncoder().encodeToString(pictureData);
+                carImages.put(car.getId(), base64Image);
+            }
+        });
+        model.addAttribute("carImages", carImages);
+        model.addAttribute("cars", cars);
         return "profile";
     }
 
