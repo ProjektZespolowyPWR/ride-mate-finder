@@ -24,7 +24,7 @@ public class Passengers  implements java.io.Serializable {
      private User user;
      private Route route;
      private String passengerSpot;
-     private Boolean accepted;
+     private Integer accepted;
 
     public Passengers() {
     }
@@ -33,7 +33,7 @@ public class Passengers  implements java.io.Serializable {
     public Passengers(UUID id) {
         this.id = id;
     }
-    public Passengers(UUID id, User user, Route route, String passengerSpot, Boolean accepted) {
+    public Passengers(UUID id, User user, Route route, String passengerSpot, Integer accepted) {
        this.id = id;
        this.user = user;
        this.route = route;
@@ -85,11 +85,11 @@ public class Passengers  implements java.io.Serializable {
 
     
     @Column(name="accepted")
-    public Boolean getAccepted() {
+    public Integer getAccepted() {
         return this.accepted;
     }
     
-    public void setAccepted(Boolean accepted) {
+    public void setAccepted(Integer accepted) {
         this.accepted = accepted;
     }
 
