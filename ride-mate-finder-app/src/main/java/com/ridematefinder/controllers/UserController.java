@@ -127,6 +127,9 @@ public class UserController {
             int isDriver = 0;
             if (isDriverValue !=  null) {
                 isDriver = 1;
+                session.setAttribute("isDriver", isDriver);
+            } else {
+                session.removeAttribute("isDriver");
             }
             System.out.println(isDriver);
             existingUser.setIsDriver(isDriver);
@@ -154,6 +157,7 @@ public class UserController {
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("userId");
+        session.removeAttribute("isDriver");
         return "redirect:/";
     }
 

@@ -41,8 +41,13 @@ public class PrivateController {
                 userRepository.save(newUser);
                 System.out.println("user id: "+newUser.getId());
                 session.setAttribute("userId", newUser.getId());
+
+
             }
             else {
+                if (userOptional.get().getIsDriver() == 1){
+                session.setAttribute("isDriver", 1);
+                }
                 System.out.println("nie istnieje");
                 session.setAttribute("userId", userOptional.get().getId());
                 System.out.println("user id: "+userOptional.get().getId());
@@ -52,8 +57,9 @@ public class PrivateController {
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
+
         System.out.println("session id: " +session.getAttribute("userId"));
-        return "response";
+        return "redirect:/routes/all";
 
     }
 
