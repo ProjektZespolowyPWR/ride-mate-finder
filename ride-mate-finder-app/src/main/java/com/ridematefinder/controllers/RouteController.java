@@ -8,6 +8,7 @@ import com.ridematefinder.repository.RouteRepository;
 import com.ridematefinder.sql.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,10 @@ import static org.springframework.data.util.TypeUtils.type;
 @Controller
 @RequestMapping("/routes")
 public class RouteController {
+
+    @Value("${spring.google.api-key}")
+    private String googleApiKey;
+
 
     private final RouteRepository routeRepository;
     private final UserRepository userRepository;
@@ -42,6 +47,7 @@ public class RouteController {
     @GetMapping("/all")
     public String viewAllRoutes(Model model) {
         model.addAttribute("routes", routeRepository.findAll());
+        model.addAttribute("googleApiKey", googleApiKey);
         return "routes";
     }
 

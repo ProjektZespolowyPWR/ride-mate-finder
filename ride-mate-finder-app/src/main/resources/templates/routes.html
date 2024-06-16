@@ -41,7 +41,7 @@
             });
         }
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqWrcv8iCqTtf2CkXf5eFp0agjsfZLy6U&callback=initMaps"></script>
+    <script async defer th:src="'https://maps.googleapis.com/maps/api/js?key=' + ${googleApiKey} + '&callback=initMaps'"></script>
 </head>
 <body>
 <header th:replace="~{header :: header}"></header>
