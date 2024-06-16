@@ -42,15 +42,11 @@ public class CityController {
     public String addPassenger(@ModelAttribute Passengers passengerForm, @RequestParam UUID routeId, @RequestParam("cityName") String city, @RequestParam("address") String spot, HttpSession session) {
         UUID userId = (UUID) session.getAttribute("userId");
         Optional<User> user = userRepository.findById(userId);
-        System.out.println(user.get().getName());
         Optional<Route> route = routeRepository.findById(routeId);
-        System.out.println(route.get().getId());
-        System.out.println(city);
-        System.out.println(spot);
+        String fullAddress = spot + "," + city;
 
         if (user.isPresent() && route.isPresent()) {
-            System.out.println(passengerForm.getPassengerSpot());
-            Passengers newPassenger = new Passengers(UUID.randomUUID(), user.get(), route.get(), passengerForm.getPassengerSpot(), 0);
+            Passengers newPassenger = new Passengers(UUID.randomUUID(), user.get(), route.get(), fullAddress, 0);
             passengersRepository.save(newPassenger);
             return "redirect:/routes/all";  // Redirect after post success
         }

@@ -24,13 +24,24 @@
             var directionsService = new google.maps.DirectionsService();
             var directionsRenderer = new google.maps.DirectionsRenderer();
             directionsRenderer.setMap(map);
-            calculateAndDisplayRoute(directionsService, directionsRenderer, startPoint, endPoint);
+
+            var passengerSpots = document.getElementById(mapId).getAttribute('data-passenger-spots');
+            var waypoints = passengerSpots ? passengerSpots.split(';').map(function(location) {
+                return {
+                    location: location,
+                    stopover: true
+                };
+            }) : [];
+
+            calculateAndDisplayRoute(directionsService, directionsRenderer, startPoint, endPoint, waypoints);
         }
 
-        function calculateAndDisplayRoute(directionsService, directionsRenderer, startPoint, endPoint) {
+        function calculateAndDisplayRoute(directionsService, directionsRenderer, startPoint, endPoint, waypoints) {
             directionsService.route({
                 origin: startPoint,
                 destination: endPoint,
+                waypoints: waypoints,
+                optimizeWaypoints: true, // Optional: to optimize the order of the stops
                 travelMode: 'DRIVING'
             }, function(response, status) {
                 if (status === 'OK') {
@@ -59,7 +70,11 @@
                         Age: <span th:text="${route.user.age}">Age</span><br>
                         Gender: <span th:text="${route.user.gender}">Gender</span><br>
                         <a th:href="@{/routes/submit_city(id=${route.id})}" class="btn btn-primary">Reserve Seat</a>
-                        <div th:id="'map' + ${route.id}" th:data-startpoint="${route.startPoint}" th:data-endpoint="${route.endPoint}" style="height: 400px; width: 100%;"></div>
+                    <div th:id="'map' + ${route.id}"
+                         th:data-startpoint="${route.startPoint}"
+                         th:data-endpoint="${route.endPoint}"
+                         th:data-passenger-spots="${#strings.arrayJoin(route.passengerses.![passengerSpot], ';')}"
+                         style="height: 400px; width: 100%;"></div>
                     </p>
                 </div>
             </div>
