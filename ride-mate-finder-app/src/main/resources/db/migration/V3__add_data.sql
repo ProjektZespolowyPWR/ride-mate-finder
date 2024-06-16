@@ -15,5 +15,5 @@ INSERT INTO Car (id, user_id, car_picture_id, vin, model, year, num_of_seats) VA
 
 -- Dodanie przykładowych wartości do tabeli Route
 INSERT INTO Route (id, user_id, car_id, start_point, end_point, date_of_ride, url_to_maps, available_seats) VALUES
-('55555555-5555-5555-5555-555555555555', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee', 'Point A', 'Point B', '2024-06-20', 'http://maps.google.com/example1', 3),
-('44444444-4444-4444-4444-444444444444', 'dddddddd-dddd-dddd-dddd-dddddddddddd', 'ffffffff-ffff-ffff-ffff-ffffffffffff', 'Point C', 'Point D', '2024-06-25', 'http://maps.google.com/example2', 2);
+('55555555-5555-5555-5555-555555555555', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee', 'Koszalin', 'Warsaw', '2024-06-20', 'http://maps.google.com/example1', 3),
+('44444444-4444-4444-4444-444444444444', 'dddddddd-dddd-dddd-dddd-dddddddddddd', 'ffffffff-ffff-ffff-ffff-ffffffffffff', 'Gdynia', 'Warsaw', '2024-06-25', 'http://maps.google.com/example2', 2);
