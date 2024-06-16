@@ -69,4 +69,9 @@ public class RouteController {
         routeRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/addRouteForm")
+    public String showAddRouteForm() {
+        return "addRouteForm";
+    }
 }

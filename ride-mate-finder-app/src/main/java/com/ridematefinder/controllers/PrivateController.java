@@ -34,6 +34,8 @@ public class PrivateController {
                 newUser.setEmail(email);
                 newUser.setId(randomUUID());
                 newUser.setDriverId(randomUUID());
+                newUser.setIsDriver(0);
+//                newUser.setDriverId(null);
                 newUser.setGender("Not Specified");
                 newUser.setSurname("Not Specified");
                 userRepository.save(newUser);

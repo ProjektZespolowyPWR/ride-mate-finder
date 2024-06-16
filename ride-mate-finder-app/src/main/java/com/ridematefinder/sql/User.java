@@ -42,6 +42,7 @@ public class User  implements java.io.Serializable {
      private Set<Opinioncar> opinioncars = new HashSet<Opinioncar>(0);
      private Set<Route> routes = new HashSet<Route>(0);
      private Set<Userbadges> userbadgeses = new HashSet<Userbadges>(0);
+    private Integer isDriver;
 
     public User() {
     }
@@ -53,7 +54,7 @@ public class User  implements java.io.Serializable {
         this.email = email;
         this.age = age;
     }
-    public User(UUID id, Pictures pictures, UUID driverId, String name, String surname, String email, String gender, int age, Set<Passengers> passengerses, Set<Paymentdata> paymentdatas, Set<Opinionuser> opinionusersForUserIdReceiver, Set<Opinionuser> opinionusersForUserIdSetter, Set<Car> cars, Set<Opinioncar> opinioncars, Set<Route> routes, Set<Userbadges> userbadgeses) {
+    public User(UUID id, Integer isDriver, Pictures pictures, UUID driverId, String name, String surname, String email, String gender, int age, Set<Passengers> passengerses, Set<Paymentdata> paymentdatas, Set<Opinionuser> opinionusersForUserIdReceiver, Set<Opinionuser> opinionusersForUserIdSetter, Set<Car> cars, Set<Opinioncar> opinioncars, Set<Route> routes, Set<Userbadges> userbadgeses) {
        this.id = id;
        this.pictures = pictures;
        this.driverId = driverId;
@@ -70,6 +71,7 @@ public class User  implements java.io.Serializable {
        this.opinioncars = opinioncars;
        this.routes = routes;
        this.userbadgeses = userbadgeses;
+        this.isDriver = isDriver;
     }
    
      @Id 
@@ -132,6 +134,15 @@ public class User  implements java.io.Serializable {
     
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Column(name="is_driver")
+    public Integer getIsDriver() {
+        return this.isDriver;
+    }
+
+    public void setIsDriver(Integer isDriver) {
+        this.isDriver = isDriver;
     }
 
     

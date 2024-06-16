@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS "user" (
     surname VARCHAR(255),
     email VARCHAR(255) NOT NULL UNIQUE,
     gender VARCHAR(255),
-    age INTEGER NOT NULL
+    age INTEGER NOT NULL,
+    is_driver INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS PaymentData (

@@ -80,7 +80,9 @@ public class UserController {
     }
 
     @PostMapping("/updateUserData")
-    public String addUserData(@Valid User user, BindingResult result, @RequestParam("file") MultipartFile file, Model model, HttpSession session) {
+    public String addUserData(@Valid User user, BindingResult result,
+                              @RequestParam(value = "isDriver", required = false) String isDriverValue,
+                              @RequestParam("file") MultipartFile file, Model model, HttpSession session) {
         System.out.println("test");
         if (result.hasErrors()) {
             return "profileForm";
@@ -120,6 +122,16 @@ public class UserController {
             existingUser.setSurname(user.getSurname());
             existingUser.setGender(user.getGender());
             existingUser.setAge(user.getAge());
+
+            System.out.println(isDriverValue);
+            int isDriver = 0;
+            if (isDriverValue !=  null) {
+                isDriver = 1;
+            }
+            System.out.println(isDriver);
+            existingUser.setIsDriver(isDriver);
+            System.out.println("is driver: "+existingUser.getIsDriver());
+
             System.out.println("test 3");
 
             userRepository.save(existingUser);
