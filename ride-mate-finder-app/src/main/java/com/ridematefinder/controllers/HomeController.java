@@ -11,6 +11,6 @@ public class HomeController {
     @GetMapping("/")
     public String home(HttpSession session, Model model) {
         model.addAttribute("session", session.getAttribute("userId"));
-        return "index";
+        return "redirect:/routes/all";
     }
 }

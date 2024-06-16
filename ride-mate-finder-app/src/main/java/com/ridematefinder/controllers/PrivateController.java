@@ -34,13 +34,20 @@ public class PrivateController {
                 newUser.setEmail(email);
                 newUser.setId(randomUUID());
                 newUser.setDriverId(randomUUID());
+                newUser.setIsDriver(0);
+//                newUser.setDriverId(null);
                 newUser.setGender("Not Specified");
                 newUser.setSurname("Not Specified");
                 userRepository.save(newUser);
                 System.out.println("user id: "+newUser.getId());
                 session.setAttribute("userId", newUser.getId());
+
+
             }
             else {
+                if (userOptional.get().getIsDriver() == 1){
+                session.setAttribute("isDriver", 1);
+                }
                 System.out.println("nie istnieje");
                 session.setAttribute("userId", userOptional.get().getId());
                 System.out.println("user id: "+userOptional.get().getId());
@@ -50,8 +57,9 @@ public class PrivateController {
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
+
         System.out.println("session id: " +session.getAttribute("userId"));
-        return "response";
+        return "redirect:/routes/all";
 
     }
 

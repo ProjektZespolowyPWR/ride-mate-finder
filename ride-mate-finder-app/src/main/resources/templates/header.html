@@ -34,6 +34,7 @@
                         <a th:href="@{/logout}">Logout</a>
                         <a th:if="${session.userId != null}" th:href="@{/showUserProfile}">Profile</a>
                         <a th:if="${session.userId != null}" th:href="@{/profileForm}">Update profile</a>
+                        <a th:if="${session.isDriver != null}" th:href="@{/routes/addRouteForm}">Add Route</a>
                     </div>
                 </div>
             </a>

@@ -1,7 +1,12 @@
 package com.ridematefinder.controllers;
 
+import com.ridematefinder.repository.CarRepository;
+import com.ridematefinder.repository.UserRepository;
+import com.ridematefinder.sql.Car;
 import com.ridematefinder.sql.Route;
 import com.ridematefinder.repository.RouteRepository;
+import com.ridematefinder.sql.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,15 +17,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.springframework.data.util.TypeUtils.type;
+
 @Controller
 @RequestMapping("/routes")
 public class RouteController {
 
     private final RouteRepository routeRepository;
+    private final UserRepository userRepository;
+    private final CarRepository carRepository;
 
     @Autowired
-    public RouteController(RouteRepository routeRepository) {
+    public RouteController(RouteRepository routeRepository, UserRepository userRepository, CarRepository carRepository) {
         this.routeRepository = routeRepository;
+        this.userRepository = userRepository;
+        this.carRepository = carRepository;
     }
 
     @GetMapping
@@ -68,5 +79,44 @@ public class RouteController {
         }
         routeRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/addRouteForm")
+    public String showAddRouteForm(Model model, HttpSession session) {
+        User user = userRepository.findById((UUID) session.getAttribute("userId")).get();
+        List<Car> carsList = carRepository.findAllByUser(user);
+        model.addAttribute("cars", carsList);
+        return "addRouteForm";
+    }
+
+    @PostMapping("/addRoute")
+    public String addRoute(@RequestParam("startCity") String startCity,
+                           @RequestParam("startStreet") String startStreet,
+                           @RequestParam("endCity") String endCity,
+                           @RequestParam("endStreet") String endStreet,
+                           @ModelAttribute Route route, Model model,
+                           @RequestParam("car") UUID carId,
+                           HttpSession session) {
+        System.out.println("test add route");
+
+        String startPoint = startCity.trim() + ", " + startStreet.trim();
+        String endPoint = endCity.trim() + ", " + endStreet.trim();
+
+        route.setStartPoint(startPoint);
+        route.setEndPoint(endPoint);
+        route.setId(UUID.randomUUID());
+        User user = userRepository.findById((UUID) session.getAttribute("userId")).get();
+        route.setUser(user);
+        Car car = carRepository.findById(carId).orElse(null);
+        if (car != null) {
+            route.setCar(car);
+        }
+
+        System.out.println("test before save");
+        // Reszta logiki zapisywania trasy do bazy danych
+        routeRepository.save(route);
+
+        model.addAttribute("message", "Route successfully added!");
+        return "redirect:/showUserProfile";
     }
 }
