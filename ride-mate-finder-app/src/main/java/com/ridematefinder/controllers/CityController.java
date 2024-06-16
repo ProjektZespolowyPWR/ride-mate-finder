@@ -39,7 +39,9 @@ public class CityController {
     }
 
     @PostMapping("/routes/submit_city")
-    public String addPassenger(@ModelAttribute Passengers passengerForm, @RequestParam UUID routeId, @RequestParam("cityName") String city, @RequestParam("address") String spot, HttpSession session) {
+    public String addPassenger(@ModelAttribute Passengers passengerForm, @RequestParam UUID routeId,
+                               @RequestParam("cityName") String city,
+                               @RequestParam("address") String spot, HttpSession session) {
         UUID userId = (UUID) session.getAttribute("userId");
         Optional<User> user = userRepository.findById(userId);
         Optional<Route> route = routeRepository.findById(routeId);

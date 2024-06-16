@@ -1,11 +1,7 @@
 package com.ridematefinder.controllers;
 
-import com.ridematefinder.repository.CarRepository;
-import com.ridematefinder.repository.PictureRepository;
-import com.ridematefinder.repository.UserRepository;
-import com.ridematefinder.sql.Car;
-import com.ridematefinder.sql.Pictures;
-import com.ridematefinder.sql.User;
+import com.ridematefinder.repository.*;
+import com.ridematefinder.sql.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -26,11 +22,15 @@ public class UserController {
     private final UserRepository userRepository;
     private final PictureRepository pictureRepository;
     private final CarRepository carRepository;
+    private final PassengersRepository passengersRepository;
+    private final RouteRepository routeRepository;
 
-    public UserController(UserRepository userRepository, PictureRepository pictureRepository, CarRepository carRepository) {
+    public UserController(UserRepository userRepository, PictureRepository pictureRepository, CarRepository carRepository, PassengersRepository passengersRepository, RouteRepository routeRepository) {
         this.userRepository = userRepository;
         this.pictureRepository = pictureRepository;
         this.carRepository = carRepository;
+        this.passengersRepository = passengersRepository;
+        this.routeRepository = routeRepository;
     }
 
     @GetMapping("/profileForm")
@@ -76,7 +76,35 @@ public class UserController {
         });
         model.addAttribute("carImages", carImages);
         model.addAttribute("cars", cars);
+
+        List<Route> routesList = routeRepository.findAllByUser(user.get());
+        List<Passengers> passengersList = passengersRepository.findAll();
+        List<Passengers> newPassengersList = new ArrayList<>();
+        for (Passengers passengers : passengersList) {
+            if(routesList.contains(passengers.getRoute())) {
+                newPassengersList.add(passengers);
+            }
+        }
+        model.addAttribute("passengers", newPassengersList);
+
         return "profile";
+    }
+
+    @GetMapping("/showAcceptForm")
+    public String showAcceptForm(@RequestParam UUID id, Model model, HttpSession session) {
+        Optional<Passengers> passenger = passengersRepository.findById(id);
+        passenger.ifPresent(value -> model.addAttribute("passenger", value));
+        return "acceptForm";
+    }
+
+    @PostMapping("/acceptPassenger")
+    public String acceptPassenger(@RequestParam UUID id, @RequestParam Integer accepted) {
+        Optional<Passengers> passenger = passengersRepository.findById(id);
+        passenger.ifPresent(value -> {
+            value.setAccepted(accepted);
+            passengersRepository.save(value);
+        });
+        return "redirect:/showUserProfile";
     }
 
     @PostMapping("/updateUserData")
