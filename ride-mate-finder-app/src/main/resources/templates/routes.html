@@ -73,8 +73,9 @@
                     <div th:id="'map' + ${route.id}"
                          th:data-startpoint="${route.startPoint}"
                          th:data-endpoint="${route.endPoint}"
-                         th:data-passenger-spots="${#strings.arrayJoin(route.passengerses.![passengerSpot], ';')}"
-                         style="height: 400px; width: 100%;"></div>
+                         th:data-passenger-spots="${#strings.arrayJoin(route.passengerses.?[accepted != 0].![passengerSpot], ';')}"
+                         style="height: 400px; width: 100%;">
+                    </div>
                     </p>
                 </div>
             </div>
