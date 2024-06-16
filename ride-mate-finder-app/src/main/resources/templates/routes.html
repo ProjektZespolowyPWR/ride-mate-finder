@@ -58,9 +58,8 @@
                         Surname: <span th:text="${route.user.surname}">Surname</span><br>
                         Age: <span th:text="${route.user.age}">Age</span><br>
                         Gender: <span th:text="${route.user.gender}">Gender</span><br>
-                        <a th:href="${route.urlToMaps}" target="_blank">View on Map</a><br>
                         <a th:href="@{/routes/submit_city(id=${route.id})}" class="btn btn-primary">Reserve Seat</a>
-                        <div id="map${route.id}" th:data-startpoint="${route.startPoint}" th:data-endpoint="${route.endPoint}" style="height: 400px; width: 100%;"></div>
+                        <div th:id="'map' + ${route.id}" th:data-startpoint="${route.startPoint}" th:data-endpoint="${route.endPoint}" style="height: 400px; width: 100%;"></div>
                     </p>
                 </div>
             </div>
