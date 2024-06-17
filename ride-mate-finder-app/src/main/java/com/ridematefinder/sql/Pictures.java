@@ -3,6 +3,7 @@ package com.ridematefinder.sql;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -90,6 +91,10 @@ public class Pictures  implements java.io.Serializable {
     
     public void setCars(Set<Car> cars) {
         this.cars = cars;
+    }
+
+    public String generateBase64Image() {
+        return Base64.encodeBase64String(this.data);
     }
 
 

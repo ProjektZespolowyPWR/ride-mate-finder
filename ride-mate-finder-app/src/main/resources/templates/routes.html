@@ -90,6 +90,13 @@
                          th:data-passenger-spots="${#strings.arrayJoin(route.passengerses.?[accepted != 0].![passengerSpot], ';')}"
                          style="height: 400px; width: 100%;">
                     </div>
+                    <div th:if="${route.car.pictures != null}" class="col-md-2">
+                        <img th:src="@{'data:image/png;base64,'+${route.car.pictures.generateBase64Image()}}" alt="Car image" class="img-fluid car-image"/>
+                    </div>
+                    <div th:unless="${route.car.pictures != null}" class="col-md-2">
+                        <p>No Image Available</p>
+                    </div>
+
                 </div>
             </div>
         </div>

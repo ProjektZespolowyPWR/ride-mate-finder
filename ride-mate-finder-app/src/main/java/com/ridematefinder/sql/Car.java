@@ -64,9 +64,9 @@ public class Car  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="car_picture_id")
-@JsonBackReference
+    @JsonBackReference
     public Pictures getPictures() {
         return this.pictures;
     }
