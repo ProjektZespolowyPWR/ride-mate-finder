@@ -7,6 +7,7 @@ import com.ridematefinder.sql.Passengers;
 import com.ridematefinder.sql.Route;
 import com.ridematefinder.sql.User;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,9 @@ import java.util.UUID;
 
 @Controller
 public class CityController {
+
+    @Value("${spring.google.api-key}")
+    private String googleApiKey;
 
     private final RouteRepository routeRepository;
     private final UserRepository userRepository;
@@ -35,6 +39,7 @@ public class CityController {
     public String handleCitySubmission(@RequestParam UUID id, Model model) {
         Optional<Route> route = routeRepository.findById(id);
         route.ifPresent(r -> model.addAttribute("route", r));
+        model.addAttribute("googleApiKey", googleApiKey);
         return "stop_form";
     }
 
