@@ -107,6 +107,7 @@ public class UserController {
         Optional<Passengers> passenger = passengersRepository.findById(id);
         passenger.ifPresent(value -> {
             value.setAccepted(accepted);
+            value.getRoute().setAvailableSeats(value.getRoute().getAvailableSeats() - 1);
             passengersRepository.save(value);
         });
         return "redirect:/showUserProfile";
@@ -172,7 +173,7 @@ public class UserController {
 
             userRepository.save(existingUser);
 
-            return "index";
+            return "redirect:/showUserProfile";
         } catch (IOException e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "Error uploading picture. Please try again.");
