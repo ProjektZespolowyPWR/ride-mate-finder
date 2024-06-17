@@ -4,6 +4,7 @@ import com.ridematefinder.repository.*;
 import com.ridematefinder.sql.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,9 @@ import java.util.*;
 
 @Controller
 public class UserController {
+
+    @Value("${spring.google.api-key}")
+    private String googleApiKey;
 
     private final UserRepository userRepository;
     private final PictureRepository pictureRepository;
@@ -94,6 +98,7 @@ public class UserController {
     public String showAcceptForm(@RequestParam UUID id, Model model, HttpSession session) {
         Optional<Passengers> passenger = passengersRepository.findById(id);
         passenger.ifPresent(value -> model.addAttribute("passenger", value));
+        model.addAttribute("googleApiKey", googleApiKey);
         return "acceptForm";
     }
 
