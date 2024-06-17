@@ -22,33 +22,38 @@
         }
 
         function initMap(mapId, includePassengerSpot) {
-            var mapContainer = document.getElementById(mapId);
-            var startPoint = mapContainer.getAttribute('data-startpoint');
-            var endPoint = mapContainer.getAttribute('data-endpoint');
-            var passengerSpots = mapContainer.getAttribute('data-passenger-spots').split(';');
-            if (includePassengerSpot) {
-                var currentSpot = mapContainer.getAttribute('data-current-passenger-spot');
-                passengerSpots.push(currentSpot);
+        var mapContainer = document.getElementById(mapId);
+        var startPoint = mapContainer.getAttribute('data-startpoint');
+        var endPoint = mapContainer.getAttribute('data-endpoint');
+        var passengerSpots = mapContainer.getAttribute('data-passenger-spots');
+        var waypoints = passengerSpots ? passengerSpots.split(';') : [];
+
+        if (includePassengerSpot) {
+            var currentSpot = mapContainer.getAttribute('data-current-passenger-spot');
+            if (currentSpot) {
+                waypoints.push(currentSpot);  // Ensure this is pushed only if not null
             }
-
-            var waypoints = passengerSpots.filter(Boolean).map(function(location) {
-                return {
-                    location: location,
-                    stopover: true
-                };
-            });
-
-            var map = new google.maps.Map(mapContainer, {
-                zoom: 7,
-                center: { lat: 52.237049, lng: 21.017532 }
-            });
-
-            var directionsService = new google.maps.DirectionsService();
-            var directionsRenderer = new google.maps.DirectionsRenderer();
-            directionsRenderer.setMap(map);
-
-            calculateAndDisplayRoute(directionsService, directionsRenderer, startPoint, endPoint, waypoints);
         }
+
+        waypoints = waypoints.map(function(location) {
+            return {
+                location: location,
+                stopover: true
+            };
+        });
+
+        var map = new google.maps.Map(mapContainer, {
+            zoom: 7,
+            center: { lat: 52.237049, lng: 21.017532 }
+        });
+
+        var directionsService = new google.maps.DirectionsService();
+        var directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map);
+
+        calculateAndDisplayRoute(directionsService, directionsRenderer, startPoint, endPoint, waypoints);
+    }
+
 
         function calculateAndDisplayRoute(directionsService, directionsRenderer, startPoint, endPoint, waypoints) {
             directionsService.route({
@@ -92,7 +97,7 @@
             <div id="beforeMap" class="map-container"
                  th:data-startpoint="${passenger.route.startPoint}"
                  th:data-endpoint="${passenger.route.endPoint}"
-                 th:data-passenger-spots="${#strings.arrayJoin(passenger.route.passengerses.?[accepted != 0].![passengerSpot], ';')}"
+                 th:data-passenger-spots="${#strings.arrayJoin(passenger.route.passengerses.?[accepted != 0].![passengerSpot], ';') ?: ''}"
                  th:data-current-passenger-spot="${passenger.passengerSpot}">
             </div>
         </div>
