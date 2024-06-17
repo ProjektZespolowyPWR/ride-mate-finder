@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS Route (
     car_id UUID REFERENCES Car(id),
     start_point VARCHAR(255) ,
     end_point VARCHAR(255),
-    date_of_ride DATE,
+    date_of_ride TIMESTAMP,
     url_to_maps VARCHAR(511),
     available_seats INTEGER
 );

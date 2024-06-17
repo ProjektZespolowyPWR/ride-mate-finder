@@ -119,7 +119,6 @@ public class RouteController {
         }
 
         System.out.println("test before save");
-        // Reszta logiki zapisywania trasy do bazy danych
         routeRepository.save(route);
 
         model.addAttribute("message", "Route successfully added!");

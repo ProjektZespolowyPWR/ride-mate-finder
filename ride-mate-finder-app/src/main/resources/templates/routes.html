@@ -72,7 +72,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${route.startPoint} + ' to ' + ${route.endPoint}">Start to End</h5>
                     <p class="card-text">
-                        Date: <span th:text="${#dates.format(route.dateOfRide, 'dd MMMM yyyy')}">Date</span><br>
+                        Date: <span th:text="${#temporals.format(route.dateOfRide, 'dd MMMM yyyy HH:mm')}">Date</span><br>
                         Available Seats: <span th:text="${route.availableSeats}">0</span><br>
                         Driver Name: <span th:text="${route.user.name}">Name</span><br>
                         Surname: <span th:text="${route.user.surname}">Surname</span><br>
@@ -90,6 +90,13 @@
                          th:data-passenger-spots="${#strings.arrayJoin(route.passengerses.?[accepted != 0].![passengerSpot], ';')}"
                          style="height: 400px; width: 100%;">
                     </div>
+                    <div th:if="${route.car.pictures != null}" class="col-md-2">
+                        <img th:src="@{'data:image/png;base64,'+${route.car.pictures.generateBase64Image()}}" alt="Car image" class="img-fluid car-image"/>
+                    </div>
+                    <div th:unless="${route.car.pictures != null}" class="col-md-2">
+                        <p>No Image Available</p>
+                    </div>
+
                 </div>
             </div>
         </div>

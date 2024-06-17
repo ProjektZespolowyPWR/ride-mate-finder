@@ -10,7 +10,7 @@
 
 <div class="container mt-5">
     <h1>Add Route Form</h1>
-    <form th:action="@{/routes/addRoute}" method="post">
+    <form id="addRouteForm" th:action="@{/routes/addRoute}" method="post">
         <div class="mb-3">
             <label for="startCity" class="form-label">Start City</label>
             <input type="text" class="form-control" id="startCity" name="startCity" required>
@@ -29,13 +29,19 @@
         </div>
         <div class="mb-3">
             <label for="dateOfRide" class="form-label">Date of Ride</label>
-            <input type="date" class="form-control" id="dateOfRide" name="dateOfRide" required>
+            <input type="datetime-local" class="form-control" id="dateOfRide" name="dateOfRide" required>
         </div>
-        <div class="mb-3" th:if="${not #lists.isEmpty(cars)}">
+        <div class="mb-3">
             <label for="car" class="form-label">Car</label>
             <select class="form-control" id="car" name="car">
-                <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.model}"></option>
+                <th:block th:if="${#lists.isEmpty(cars)}">
+                    <option value="">No cars available</option>
+                </th:block>
+                <th:block th:if="${not #lists.isEmpty(cars)}">
+                    <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.model}"></option>
+                </th:block>
             </select>
+            <div id="carWarning" class="alert alert-warning" style="display: none;">You must add a car first.</div>
         </div>
         <div class="mb-3">
             <label for="availableSeats" class="form-label">Available Seats</label>
@@ -47,5 +53,14 @@
 
 <footer th:replace="~{footer :: footer}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    document.getElementById('addRouteForm').addEventListener('submit', function(event) {
+        var carSelect = document.getElementById('car');
+        if (carSelect.options.length === 1 && carSelect.options[0].value === "") {
+            event.preventDefault(); // Prevent form submission
+            document.getElementById('carWarning').style.display = 'block'; // Show warning
+        }
+    });
+</script>
 </body>
 </html>
