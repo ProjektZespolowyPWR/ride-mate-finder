@@ -23,7 +23,7 @@
     <form th:action="@{/routes/submit_city}" method="post" id="cityForm">
         <div class="mb-3">
             <p class="card-text">
-                Date: <span th:text="${#dates.format(route.dateOfRide, 'dd MMMM yyyy')}">Date</span><br>
+                Date: <span th:text="${#temporals.format(route.dateOfRide, 'dd MMMM yyyy HH:mm')}">Date</span><br>
                 Driver Name: <span th:text="${route.user.name}">Name</span><br>
                 Surname: <span th:text="${route.user.surname}">Surname</span><br>
                 Age: <span th:text="${route.user.age}">Age</span><br>
