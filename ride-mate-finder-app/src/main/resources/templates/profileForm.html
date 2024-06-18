@@ -10,7 +10,7 @@
 
 <div class="container mt-5">
     <h1 th:text="${LoginUser.name}" class="text-center mb-4"></h1>
-    <h2 class="text-center mb-4">Add User Profile</h2>
+    <h2 class="text-center mb-4">Edit User Profile</h2>
     <div class="text-center mb-4">
         <img th:if="${userImage != null}" th:src="'data:image/png;base64,' + ${userImage}" alt="User image" class="img-fluid rounded-circle" />
         <p th:if="${userImage == null}">No user image available</p>

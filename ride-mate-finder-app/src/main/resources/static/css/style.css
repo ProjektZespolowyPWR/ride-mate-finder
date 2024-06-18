@@ -7,11 +7,13 @@
   }
 
   .form-control {
-    background-color: #1c1e21;
-    color: #b9bbbe;
-    border: none;
-    height: 45px; /* Adjust the height as needed */
-    max-width: 300px;
+      font-size: 2.0rem; /* Larger font size */
+      padding: 12px; /* Larger padding */
+      background-color: #1c1e21;
+      color: #b9bbbe;
+      border: none;
+      height: auto; /* Adjust height automatically based on padding */
+      max-width: 300px;
   }
 
   .form-control::placeholder {
@@ -792,6 +794,7 @@ footer {
 
 /* Dodatkowe style dla formularza */
 .form-label {
+  font-size: 3.0rem; /*change to bigger font*/
   font-weight: bold;
   margin-bottom: 10px;
 }
