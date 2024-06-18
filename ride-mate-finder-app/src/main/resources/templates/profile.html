@@ -53,7 +53,7 @@
       </table>
     </div>
     <div class="text-center">
-      <a href="/carForm" class="btn btn-primary">Add Car</a>
+      <a href="/carForm" class="btn btn-primary" style="font-size: 20px; padding: 12px 24px;">Add Car</a>
     </div>
   </div>
 </div>
@@ -77,7 +77,7 @@
       <td th:text="${passenger.user.gender}"></td>
       <td th:text="${passenger.accepted == 1 ? 'Yes' : 'No'}"></td>
       <td>
-        <a th:href="@{/showAcceptForm(id=${passenger.id})}" class="btn btn-primary">Accept Passenger</a>
+        <a th:href="@{/showAcceptForm(id=${passenger.id})}" class="btn btn-primary" style="font-size: 16px; padding: 9px 16px;">Accept Passenger</a>
       </td>
       <!-- Add more data as needed -->
     </tr>

@@ -7,9 +7,13 @@
   }
 
   .form-control {
-    background-color: #1c1e21;
-    color: #b9bbbe;
-    border: none;
+      font-size: 2.0rem; /* Larger font size */
+      padding: 12px; /* Larger padding */
+      background-color: #1c1e21;
+      color: #b9bbbe;
+      border: none;
+      height: auto; /* Adjust height automatically based on padding */
+      max-width: 300px;
   }
 
   .form-control::placeholder {
@@ -237,19 +241,21 @@ a {
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-  display: none;
-  position: absolute;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    background-color: white; /* Added white background */
+    color: black; /* Ensured text color is black for readability */
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
 
 /* Change color of dropdown links on hover */
@@ -790,7 +796,9 @@ footer {
 
 /* Dodatkowe style dla formularza */
 .form-label {
+  font-size: 3.0rem; /*change to bigger font*/
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .invalid-feedback {
@@ -804,5 +812,52 @@ footer {
 .text-center {
   text-align: center;
 }
+
+.route-card {
+    width: 100%; /* Use full width of the container */
+    margin-bottom: 20px; /* Adds bottom margin for spacing between cards */
+}
+
+.route-card .card {
+    display: flex;
+    flex-direction: row; /* Ensures content is side by side */
+    align-items: stretch; /* Stretches items to fill the card */
+    padding: 20px;
+    width: 100%; /* Ensures card takes full width of its container */
+}
+
+.route-card .card-body {
+    display: flex;
+    flex: 1; /* Allows body to expand and use available space */
+    justify-content: space-between; /* Maintains space between items */
+    align-items: center;
+    padding-right: 20px; /* Adds padding on the right for spacing */
+}
+
+.card-footer {
+    width: 100%; /* Ensures footer takes full width of the card */
+}
+
+.route-card .square {
+    width: 300px; /* Set a fixed width */
+    height: 300px; /* Set a fixed height to make it a square */
+    object-fit: cover; /* Ensures images cover the area without distorting aspect ratio */
+}
+
+.route-card #map {
+    height: 100%; /* Full container height */
+    width: 100%; /* Full container width */
+}
+
+.route-card img.car-image {
+    max-width: 100%; /* Allows image to fill the container */
+    max-height: 100%; /* Restricts image to the container's height, maintaining aspect ratio */
+}
+
+#car {
+    height: 45px; /* Ensure the select dropdown matches input height */
+    max-width: 300px; /* Adjust the width as needed */
+}
+
 
 

@@ -106,9 +106,13 @@ public class UserController {
     public String acceptPassenger(@RequestParam UUID id, @RequestParam Integer accepted) {
         Optional<Passengers> passenger = passengersRepository.findById(id);
         passenger.ifPresent(value -> {
-            value.setAccepted(accepted);
-            value.getRoute().setAvailableSeats(value.getRoute().getAvailableSeats() - 1);
-            passengersRepository.save(value);
+            if(accepted == 0){
+                passengersRepository.delete(value);
+            } else {
+                value.setAccepted(accepted);
+                value.getRoute().setAvailableSeats(value.getRoute().getAvailableSeats() - 1);
+                passengersRepository.save(value);
+            }
         });
         return "redirect:/showUserProfile";
     }
@@ -158,9 +162,8 @@ public class UserController {
             existingUser.setAge(user.getAge());
 
             System.out.println(isDriverValue);
-            int isDriver = 0;
-            if (isDriverValue !=  null) {
-                isDriver = 1;
+            int isDriver = Integer.parseInt(isDriverValue);
+            if (isDriver == 1) {
                 session.setAttribute("isDriver", isDriver);
             } else {
                 session.removeAttribute("isDriver");

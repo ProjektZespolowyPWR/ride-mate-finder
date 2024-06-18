@@ -10,7 +10,7 @@
 
 <div class="container mt-5">
     <h1 th:text="${LoginUser.name}" class="text-center mb-4"></h1>
-    <h2 class="text-center mb-4">Add User Profile</h2>
+    <h2 class="text-center mb-4">Edit User Profile</h2>
     <div class="text-center mb-4">
         <img th:if="${userImage != null}" th:src="'data:image/png;base64,' + ${userImage}" alt="User image" class="img-fluid rounded-circle" />
         <p th:if="${userImage == null}">No user image available</p>
@@ -51,14 +51,12 @@
         </div>
         <div class="mb-3">
             <label for="isDriver" class="form-label">Are you a Driver?</label>
-            <div>
-                <input type="checkbox" id="isDriver" name="isDriver" value="1" class="form-check-input">
-                <label for="isDriver" class="form-check-label">Yes</label>
-            </div>
+            <select id="isDriver" name="isDriver" class="form-control">
+                <option value="1" th:selected="${LoginUser.isDriver == 1}">Yes</option>
+                <option value="0" th:selected="${LoginUser.isDriver != 1}">No</option>
+            </select>
         </div>
-        <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+        <button type="submit" class="btn btn-primary" style="font-size: 20px; padding: 12px 24px;">Submit</button>
     </form>
 </div>
 
