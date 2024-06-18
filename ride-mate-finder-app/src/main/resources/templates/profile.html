@@ -11,7 +11,7 @@
 <div class="container mt-5">
   <div class="card p-4">
     <div class="text-center mb-4">
-      <h1 class="mb-4" th:text="${LoginUser.name}">User Name</h1>
+      <h1 class="mb-4" th:text="${User.name}">User Name</h1>
       <div class="mb-4">
         <img th:if="${userImage}" th:src="'data:image/png;base64,' + ${userImage}" alt="User image" class="img-fluid rounded-circle user-image" />
       </div>
@@ -19,10 +19,10 @@
     </div>
     <h2 class="text-center mb-4">User Profile</h2>
     <div class="mb-4">
-      <p><strong>Email:</strong> <span th:text="${LoginUser.email}"></span></p>
-      <p><strong>Gender:</strong> <span th:text="${LoginUser.gender}"></span></p>
-      <p><strong>Age:</strong> <span th:text="${LoginUser.age}"></span></p>
-      <p><strong>User is also driver:</strong> <span th:text="${LoginUser.isDriver == 1 ? 'Yes' : 'No'}"></span></p>
+      <p><strong>Email:</strong> <span th:text="${User.email}"></span></p>
+      <p><strong>Gender:</strong> <span th:text="${User.gender}"></span></p>
+      <p><strong>Age:</strong> <span th:text="${User.age}"></span></p>
+      <p><strong>User is also driver:</strong> <span th:text="${User.isDriver == 1 ? 'Yes' : 'No'}"></span></p>
     </div>
     <div class="mb-4">
       <h3 class="mb-3">User's Cars</h3>
@@ -53,11 +53,12 @@
       </table>
     </div>
     <div class="text-center">
-      <a href="/carForm" class="btn btn-primary" style="font-size: 20px; padding: 12px 24px;">Add Car</a>
+      <a th:if="${canAddCar}" href="/carForm" class="btn btn-primary" style="font-size: 20px; padding: 12px 24px;">Add Car</a>
     </div>
   </div>
 </div>
-<div class="container mt-5">
+
+<div th:if="${passengers != null}" class="container mt-5">
   <h2>Passengers</h2>
   <table class="table table-striped">
     <thead>

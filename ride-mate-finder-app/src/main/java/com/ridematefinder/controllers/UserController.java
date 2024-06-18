@@ -5,6 +5,7 @@ import com.ridematefinder.sql.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,10 +59,29 @@ public class UserController {
     }
 
     @GetMapping("/showUserProfile")
-    public String showProfile(Model model, HttpSession session){
-        UUID userId = (UUID) session.getAttribute("userId");
+    public String showProfile(@RequestParam(required = false) UUID id, Model model, HttpSession session){
+
+        UUID userId = null;
+        boolean loginUser = false;
+
+        model.addAttribute("canAddCar", false);
+
+        UUID loginId = (UUID) session.getAttribute("userId");
+
+        String sendId = id.toString();
+
+        if (session.getAttribute("userId") != null && loginId.toString().equals(sendId) ) {
+            userId = (UUID) session.getAttribute("userId");
+            loginUser = true;
+            model.addAttribute("canAddCar", true);
+            System.out.println("Login user");
+        } else {
+            userId = id;
+        }
+
+
         Optional<User> user = userRepository.findById(userId);
-        user.ifPresent(value -> { model.addAttribute("LoginUser", value);
+        user.ifPresent(value -> { model.addAttribute("User", value);
             if (value.getPictures() != null) {
                 System.out.println("test get picture");
                 byte[] pictureData = value.getPictures().getPictureData();;
@@ -81,18 +101,21 @@ public class UserController {
         model.addAttribute("carImages", carImages);
         model.addAttribute("cars", cars);
 
-        List<Route> routesList = routeRepository.findAllByUser(user.get());
-        List<Passengers> passengersList = passengersRepository.findAll();
-        List<Passengers> newPassengersList = new ArrayList<>();
-        for (Passengers passengers : passengersList) {
-            if(routesList.contains(passengers.getRoute())) {
-                newPassengersList.add(passengers);
+        if (loginUser) {
+            List<Route> routesList = routeRepository.findAllByUser(user.get());
+            List<Passengers> passengersList = passengersRepository.findAll();
+            List<Passengers> newPassengersList = new ArrayList<>();
+            for (Passengers passengers : passengersList) {
+                if(routesList.contains(passengers.getRoute())) {
+                    newPassengersList.add(passengers);
+                }
             }
+            model.addAttribute("passengers", newPassengersList);
         }
-        model.addAttribute("passengers", newPassengersList);
 
         return "profile";
     }
+
 
     @GetMapping("/showAcceptForm")
     public String showAcceptForm(@RequestParam UUID id, Model model, HttpSession session) {
