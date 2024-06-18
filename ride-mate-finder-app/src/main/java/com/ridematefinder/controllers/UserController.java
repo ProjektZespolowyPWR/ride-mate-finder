@@ -106,9 +106,13 @@ public class UserController {
     public String acceptPassenger(@RequestParam UUID id, @RequestParam Integer accepted) {
         Optional<Passengers> passenger = passengersRepository.findById(id);
         passenger.ifPresent(value -> {
-            value.setAccepted(accepted);
-            value.getRoute().setAvailableSeats(value.getRoute().getAvailableSeats() - 1);
-            passengersRepository.save(value);
+            if(accepted == 0){
+                passengersRepository.delete(value);
+            } else {
+                value.setAccepted(accepted);
+                value.getRoute().setAvailableSeats(value.getRoute().getAvailableSeats() - 1);
+                passengersRepository.save(value);
+            }
         });
         return "redirect:/showUserProfile";
     }
