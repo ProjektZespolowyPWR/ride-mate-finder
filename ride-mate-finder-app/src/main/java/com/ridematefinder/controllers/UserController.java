@@ -158,9 +158,8 @@ public class UserController {
             existingUser.setAge(user.getAge());
 
             System.out.println(isDriverValue);
-            int isDriver = 0;
-            if (isDriverValue !=  null) {
-                isDriver = 1;
+            int isDriver = Integer.parseInt(isDriverValue);
+            if (isDriver == 1) {
                 session.setAttribute("isDriver", isDriver);
             } else {
                 session.removeAttribute("isDriver");

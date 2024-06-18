@@ -51,10 +51,10 @@
         </div>
         <div class="mb-3">
             <label for="isDriver" class="form-label">Are you a Driver?</label>
-            <div>
-                <input type="checkbox" id="isDriver" name="isDriver" value="1" class="form-check-input">
-                <label for="isDriver" class="form-check-label">Yes</label>
-            </div>
+            <select id="isDriver" name="isDriver" class="form-control">
+                <option value="1" th:selected="${LoginUser.isDriver == 1}">Yes</option>
+                <option value="0" th:selected="${LoginUser.isDriver != 1}">No</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-primary" style="font-size: 20px; padding: 12px 24px;">Submit</button>
     </form>
