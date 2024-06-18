@@ -65,32 +65,36 @@
 </head>
 <body>
 <header th:replace="~{header :: header}"></header>
-<div class="container-fluid mt-4">
+<div class="container mt-4">
     <div class="card-body d-flex align-items-center" style="gap: 20px;">
         <div th:each="route : ${routes}" class="route-card">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${route.startPoint} + ' to ' + ${route.endPoint}">Start to End</h5>
                     <p class="card-text">
-                        Date: <span th:text="${#temporals.format(route.dateOfRide, 'dd MMMM yyyy HH:mm')}">Date</span><br>
+                        Start: <strong th:text="${route.startPoint} ">Start</strong></br>
+                        Destination: <strong th:text="${route.endPoint}">End</strong></br>
+                        <a href="#"
+                            th:href="${session.userId != null} ? @{/routes/submit_city(id=${route.id})} : '#'"
+                            th:data-logged-in="${session.userId != null}"
+                            class="btn btn-primary reserve-seat"
+                           style="font-size: 20px; padding: 12px 24px;"
+                            onclick="checkLogin(this)">Reserve Seat</a>
+                    </p>
+                    <p class="card-text">
+                        Date: <strong th:text="${#temporals.format(route.dateOfRide, 'dd MMMM yyyy HH:mm')}">Date</strong><br>
                         Available Seats: <span th:text="${route.availableSeats}">0</span><br>
                         Driver Name: <span th:text="${route.user.name}">Name</span><br>
                         Surname: <span th:text="${route.user.surname}">Surname</span><br>
                         Age: <span th:text="${route.user.age}">Age</span><br>
                         Gender: <span th:text="${route.user.gender}">Gender</span><br>
-                        <a href="#"
-                           th:href="${session.userId != null} ? @{/routes/submit_city(id=${route.id})} : '#'"
-                           th:data-logged-in="${session.userId != null}"
-                           class="btn btn-primary reserve-seat"
-                           onclick="checkLogin(this)">Reserve Seat</a>
                     </p>
                     <div th:id="'map' + ${route.id}"
                          th:data-startpoint="${route.startPoint}"
                          th:data-endpoint="${route.endPoint}"
                          th:data-passenger-spots="${#strings.arrayJoin(route.passengerses.?[accepted != 0].![passengerSpot], ';')}"
-                         style="height: 200px; width: 100%;">
+                         class="square" style="height: 300px; width: 300px;">
                     </div>
-                    <div th:if="${route.car.pictures != null}" class="text-center">
+                    <div th:if="${route.car.pictures != null}" class="text-center square">
                         <img th:src="@{'data:image/png;base64,'+${route.car.pictures.generateBase64Image()}}" alt="Car image" class="img-fluid car-image"/>
                     </div>
                     <div th:unless="${route.car.pictures != null}" class="text-center">
