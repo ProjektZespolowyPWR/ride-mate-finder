@@ -1,8 +1,10 @@
 package com.ridematefinder.controllers;
 
 import com.ridematefinder.repository.CarRepository;
+import com.ridematefinder.repository.PassengersRepository;
 import com.ridematefinder.repository.UserRepository;
 import com.ridematefinder.sql.Car;
+import com.ridematefinder.sql.Passengers;
 import com.ridematefinder.sql.Route;
 import com.ridematefinder.repository.RouteRepository;
 import com.ridematefinder.sql.User;
@@ -14,11 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import static org.springframework.data.util.TypeUtils.type;
 
 @Controller
 @RequestMapping("/routes")
@@ -31,22 +32,37 @@ public class RouteController {
     private final RouteRepository routeRepository;
     private final UserRepository userRepository;
     private final CarRepository carRepository;
+    private final PassengersRepository passengersRepository;
 
     @Autowired
-    public RouteController(RouteRepository routeRepository, UserRepository userRepository, CarRepository carRepository) {
+    public RouteController(RouteRepository routeRepository, UserRepository userRepository, CarRepository carRepository, PassengersRepository passengersRepository) {
         this.routeRepository = routeRepository;
         this.userRepository = userRepository;
         this.carRepository = carRepository;
-    }
-
-    @GetMapping
-    public List<Route> getAllRoutes() {
-        return routeRepository.findAll();
+        this.passengersRepository = passengersRepository;
     }
 
     @GetMapping("/all")
     public String viewAllRoutes(Model model) {
         model.addAttribute("routes", routeRepository.findAll());
+
+        List<Route> routes = routeRepository.findAll();
+
+        HashMap<UUID, List<Passengers>> spotsByRoutes = new HashMap<>();
+
+        for(Route route : routes){
+            List<Passengers> passengers = passengersRepository.findAllByRoute(route);
+            for(Passengers passengers1: passengers){
+                if(passengers1.getAccepted() == 0) {
+                    passengers.remove(passengers1);
+                }
+            }
+            spotsByRoutes.put(route.getId(), passengers);
+        }
+
+        model.addAttribute("spotsByRoutes", spotsByRoutes);
+
+
         model.addAttribute("googleApiKey", googleApiKey);
         return "routes";
     }

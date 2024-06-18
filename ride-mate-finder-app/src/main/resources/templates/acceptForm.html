@@ -78,7 +78,9 @@
 
 <div class="container mt-5">
     <h1>Accept Passenger</h1>
-    <p th:text="${passenger.user.name}"></p>
+    <p><a th:href="@{/showUserProfile(id=${passenger.user.id})}" th:text="${passenger.user.name}" class="driver-link"></a></p>
+    <p>Proposed spot:</p>
+    <p th:text="${passenger.passengerSpot}"></p>
     <form th:action="@{/acceptPassenger}" method="post">
         <input type="hidden" th:value="${passenger.id}" name="id">
         <div class="mb-3">
