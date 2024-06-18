@@ -805,4 +805,31 @@ footer {
   text-align: center;
 }
 
+.route-card {
+    width: 100%; /* Use full width of the container */
+    margin-bottom: 20px; /* Adds bottom margin for spacing between cards */
+}
+
+.route-card .card {
+    display: flex;
+    flex-direction: row; /* Ensures content is side by side */
+    align-items: stretch; /* Stretches items to fill the card */
+    padding: 20px;
+    width: 100%; /* Ensures card takes full width of its container */
+}
+
+.route-card .card-body {
+    display: flex;
+    flex: 1; /* Allows body to expand and use available space */
+    justify-content: space-between; /* Maintains space between items */
+    align-items: center;
+    padding-right: 20px; /* Adds padding on the right for spacing */
+}
+
+.card-footer {
+    width: 100%; /* Ensures footer takes full width of the card */
+}
+
+
+
 
