@@ -10,6 +10,8 @@
     background-color: #1c1e21;
     color: #b9bbbe;
     border: none;
+    height: 45px; /* Adjust the height as needed */
+    max-width: 300px;
   }
 
   .form-control::placeholder {
@@ -791,6 +793,7 @@ footer {
 /* Dodatkowe style dla formularza */
 .form-label {
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .invalid-feedback {
@@ -846,6 +849,10 @@ footer {
     max-height: 100%; /* Restricts image to the container's height, maintaining aspect ratio */
 }
 
+#car {
+    height: 45px; /* Ensure the select dropdown matches input height */
+    max-width: 300px; /* Adjust the width as needed */
+}
 
 
 
