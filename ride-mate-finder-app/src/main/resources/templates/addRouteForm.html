@@ -38,7 +38,7 @@
                     <option value="">No cars available</option>
                 </th:block>
                 <th:block th:if="${not #lists.isEmpty(cars)}">
-                    <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.model}"></option>
+                    <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.model}" th:data-seats="${car.numOfSeats}"></option>
                 </th:block>
             </select>
             <div id="carWarning" class="alert alert-warning" style="display: none;">You must add a car first.</div>
@@ -53,14 +53,50 @@
 
 <footer th:replace="~{footer :: footer}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
 <script>
+    document.getElementById('car').addEventListener('change', function() {
+        var selectedCarOption = this.options[this.selectedIndex];
+        var seats = selectedCarOption.getAttribute('data-seats') || 0;
+        document.getElementById('availableSeats').value = seats;
+    });
+
     document.getElementById('addRouteForm').addEventListener('submit', function(event) {
         var carSelect = document.getElementById('car');
         if (carSelect.options.length === 1 && carSelect.options[0].value === "") {
-            event.preventDefault(); // Prevent form submission
-            document.getElementById('carWarning').style.display = 'block'; // Show warning
+            event.preventDefault();
+            document.getElementById('carWarning').style.display = 'block';
         }
     });
 </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var carSelect = document.getElementById('car');
+        var seatsInput = document.getElementById('availableSeats');
+
+        function updateSeatsBasedOnCar() {
+            var selectedCarOption = carSelect.options[carSelect.selectedIndex];
+            var seats = selectedCarOption.getAttribute('data-seats') || 0; // Default to 0 if no data-seats attribute is found
+            seatsInput.value = seats;
+        }
+
+        if (carSelect.options.length > 1) {
+            updateSeatsBasedOnCar(); // Update on page load if there are available cars
+        }
+
+        carSelect.addEventListener('change', updateSeatsBasedOnCar);
+
+        document.getElementById('addRouteForm').addEventListener('submit', function(event) {
+            if (carSelect.options.length === 1 && carSelect.options[0].value === "") {
+                event.preventDefault(); // Prevent form submission
+                document.getElementById('carWarning').style.display = 'block'; // Show warning
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
