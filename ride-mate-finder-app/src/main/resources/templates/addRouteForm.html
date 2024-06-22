@@ -79,20 +79,20 @@
 
         function updateSeatsBasedOnCar() {
             var selectedCarOption = carSelect.options[carSelect.selectedIndex];
-            var seats = selectedCarOption.getAttribute('data-seats') || 0; // Default to 0 if no data-seats attribute is found
+            var seats = selectedCarOption.getAttribute('data-seats') || 0;
             seatsInput.value = seats;
         }
 
         if (carSelect.options.length > 1) {
-            updateSeatsBasedOnCar(); // Update on page load if there are available cars
+            updateSeatsBasedOnCar();
         }
 
         carSelect.addEventListener('change', updateSeatsBasedOnCar);
 
         document.getElementById('addRouteForm').addEventListener('submit', function(event) {
             if (carSelect.options.length === 1 && carSelect.options[0].value === "") {
-                event.preventDefault(); // Prevent form submission
-                document.getElementById('carWarning').style.display = 'block'; // Show warning
+                event.preventDefault();
+                document.getElementById('carWarning').style.display = 'block';
             }
         });
     });

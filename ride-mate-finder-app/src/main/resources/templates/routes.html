@@ -19,7 +19,7 @@
         function initMap(mapId, startPoint, endPoint) {
             var map = new google.maps.Map(document.getElementById(mapId), {
                 zoom: 7,
-                center: {lat: 52.237049, lng: 21.017532} // Center of Poland, adjust accordingly
+                center: {lat: 52.237049, lng: 21.017532}
             });
             var directionsService = new google.maps.DirectionsService();
             var directionsRenderer = new google.maps.DirectionsRenderer();
@@ -56,9 +56,9 @@
             var isLoggedIn = element.getAttribute('data-logged-in');
             if (isLoggedIn === 'false') {
                 alert('Please log in to reserve a seat.');
-                return false; // Prevent navigation
+                return false;
             }
-            return true; // Proceed with the link's href if logged in
+            return true;
         }
     </script>
     <script async defer th:src="'https://maps.googleapis.com/maps/api/js?key=' + ${googleApiKey} + '&callback=initMaps'"></script>

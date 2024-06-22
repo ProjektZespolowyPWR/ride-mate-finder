@@ -12,7 +12,7 @@
             margin: 0 10px;
         }
         .row {
-            justify-content: center; /* Center the maps horizontally */
+            justify-content: center;
         }
     </style>
     <script>
@@ -31,7 +31,7 @@
         if (includePassengerSpot) {
             var currentSpot = mapContainer.getAttribute('data-current-passenger-spot');
             if (currentSpot) {
-                waypoints.push(currentSpot);  // Ensure this is pushed only if not null
+                waypoints.push(currentSpot);
             }
         }
 

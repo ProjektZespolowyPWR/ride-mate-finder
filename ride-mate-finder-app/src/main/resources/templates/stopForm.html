@@ -8,10 +8,10 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <style>
         #map {
-            height: 550px; /* Height for square */
-            width: 550px; /* Width for square, matching height */
+            height: 550px;
+            width: 550px;
             margin-top: 20px;
-            margin-left: auto; /* Center the map horizontally */
+            margin-left: auto;
             margin-right: auto;
         }
     </style>
@@ -48,8 +48,8 @@
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 51.107883, lng: 17.038538}, // Coordinates for Wrocław, Poland
-            zoom: 13 // Closer zoom to show city details
+            center: {lat: 51.107883, lng: 17.038538},
+            zoom: 13
         });
         geocoder = new google.maps.Geocoder();
     }
