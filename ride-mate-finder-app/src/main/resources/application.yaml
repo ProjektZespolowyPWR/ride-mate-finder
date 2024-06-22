@@ -1,0 +1,32 @@
+server:
+  port: 7777
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationSorter: method
+spring:
+  resources:
+    static-locations: classpath:/static/
+  datasource:
+    url: jdbc:postgresql://postgresqldb:5432/ridematefinder
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  flyway:
+    locations: classpath:db/migration
+    schemas: public
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: <YOUR-GOOGLE-OAUTH-ID-HERE>
+            clientSecret: <YOUR-GOOGLE-OAUTH-SECRET-HERE>
+  google:
+    api-key: <YOUR-GOOGLE-API-KEY-HERE>
+
