@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.data.util.TypeUtils.type;
-
 @Controller
 @RequestMapping("/routes")
 public class RouteController {
@@ -103,7 +101,6 @@ public class RouteController {
                            @ModelAttribute Route route, Model model,
                            @RequestParam("car") UUID carId,
                            HttpSession session) {
-        System.out.println("test add route");
 
         String startPoint = startCity.trim() + ", " + startStreet.trim();
         String endPoint = endCity.trim() + ", " + endStreet.trim();
@@ -118,7 +115,6 @@ public class RouteController {
             route.setCar(car);
         }
 
-        System.out.println("test before save");
         routeRepository.save(route);
 
         model.addAttribute("message", "Route successfully added!");

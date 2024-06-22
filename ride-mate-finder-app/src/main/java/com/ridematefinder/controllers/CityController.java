@@ -40,7 +40,7 @@ public class CityController {
         Optional<Route> route = routeRepository.findById(id);
         route.ifPresent(r -> model.addAttribute("route", r));
         model.addAttribute("googleApiKey", googleApiKey);
-        return "stop_form";
+        return "stopForm";
     }
 
     @PostMapping("/routes/submit_city")
@@ -55,9 +55,9 @@ public class CityController {
         if (user.isPresent() && route.isPresent()) {
             Passengers newPassenger = new Passengers(UUID.randomUUID(), user.get(), route.get(), fullAddress, 0);
             passengersRepository.save(newPassenger);
-            return "redirect:/routes/all";  // Redirect after post success
+            return "redirect:/routes/all";
         }
-        return "redirect:/errorPage";  // Redirect in case of error
+        return "redirect:/errorPage";
     }
 
 }

@@ -27,12 +27,9 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        System.out.println("Console app is working.");
         Flyway flyway = Flyway.configure()
                 .dataSource(dataSourceUrl, dataSourceUsername, dataSourcePassword)
                 .load();
         flyway.migrate();
     }
-
-
 }

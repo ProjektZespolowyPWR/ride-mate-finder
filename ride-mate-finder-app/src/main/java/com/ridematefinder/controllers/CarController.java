@@ -48,7 +48,6 @@ public class CarController {
         }
 
         try {
-            // Save the car picture if provided
             if (!file.isEmpty()) {
                 Pictures picture = new Pictures();
                 picture.setPictureData(file.getBytes());
@@ -57,16 +56,14 @@ public class CarController {
                 car.setPictures(picture);
             }
 
-            // Get user ID from session and set it to car
             UUID userId = (UUID) session.getAttribute("userId");
             User user = userRepository.findById(userId).orElseThrow();
             car.setUser(user);
 
-            // Save the car to the database
             car.setId(UUID.randomUUID());
             carRepository.save(car);
 
-            return "redirect:/showUserProfile";  // Redirect to a page that shows user's cars
+            return "redirect:/showUserProfile";
         } catch (IOException e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "Error uploading picture. Please try again.");
