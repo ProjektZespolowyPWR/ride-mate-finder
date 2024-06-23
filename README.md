@@ -39,3 +39,27 @@ The application connects containers via a Docker bridge, creating a network that
 - Spring Data JPA: A framework that facilitates basic CRUD operations on the database without the need for manual implementation.
 - Spring Security: A framework that secures certain endpoints, making them inaccessible to users who are not logged in.
 - HTML/CSS/JS: Programming languages that enable us to create a responsive user interface.
+
+## How to run
+
+### Prerequisites
+
+- Java 17
+- Maven
+- Docker
+- Make
+
+**Important**: Since we are using google api keys, there is no option to run program directly after cloning/downloading repository. 
+If someone wants to run the project, they must first generate their Google API keys and insert them in the appropriate place in the application.yaml file.
+
+### Running the project
+
+In the project directory type following commands:
+```bash
+make clean prepare migrate run
+```
+
+
+
+
+
